@@ -1,0 +1,34 @@
+# Data and Copyright sensitive files
+*.pdf
+*.png
+*.json
+output/
+output_test/
+output_fix_test/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+latex/main.pdf
+latex/main.aux
+latex/main.log
+latex/main.out
+latex/main.toc
+
+# System
+.DS_Store
+Thumbs.db
