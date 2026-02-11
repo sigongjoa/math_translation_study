@@ -35,14 +35,99 @@ def clean_for_latex(text: str) -> str:
     # $$ ... $$ → \[ ... \] (display math)
     text = re.sub(r'\$\$(.+?)\$\$', r'\\[\1\\]', text, flags=re.DOTALL)
 
-    # ── 4. Escape special chars (outside math mode) ──
+    # ── 4. Wrap bare math-like patterns in $ $ (before escaping) ──
+    text = _wrap_bare_math(text)
+
+    # ── 5. Escape special chars (outside math mode) ──
     text = _escape_outside_math(text)
 
-    # ── 5. Clean artifacts ──
+    # ── 6. Insert line-break opportunities at CJK↔Latin boundaries ──
+    text = _insert_cjk_breaks(text)
+
+    # ── 7. Clean artifacts ──
     text = re.sub(r'\n{3,}', '\n\n', text)
     text = re.sub(r'  +', ' ', text)
 
     return text.strip()
+
+
+def _wrap_bare_math(text: str) -> str:
+    """Wrap bare math-like expressions (outside existing $...$) in inline math.
+    Targets patterns like a_1, x^2, R^n that would break LaTeX if left bare."""
+    if not text:
+        return text
+
+    # Split on existing math regions to avoid double-wrapping
+    math_pattern = r'(\$[^$]+?\$|\\\(.+?\\\)|\\\[.+?\\\])'
+    parts = re.split(math_pattern, text, flags=re.DOTALL)
+
+    result = []
+    for i, part in enumerate(parts):
+        if i % 2 == 1:
+            # Inside existing math — keep as-is
+            result.append(part)
+        else:
+            # Outside math — wrap bare subscript/superscript patterns
+            # Pattern: letter(s)_something or letter(s)^something
+            # e.g., a_1, a_{ij}, R^n, R^{24}, x^2
+            part = re.sub(
+                r'(?<!\$)(?<![\\a-zA-Z])([a-zA-Z][a-zA-Z0-9]*)([_^])(\{[^}]+\}|[a-zA-Z0-9]+)(?!\$)',
+                r'$\1\2\3$', part
+            )
+
+            # Pattern: letter^(expr) — e.g., e^(2πiz), x^(a+b), 2^(5/7)
+            part = re.sub(
+                r'(?<!\$)([a-zA-Z0-9])[\^][\(]([^)]+)[\)]',
+                r'$\1^{\2}$', part
+            )
+
+            # Pattern: letter ^ number.number — e.g., r ^1.4
+            part = re.sub(
+                r'(?<!\$)([a-zA-Z])\s*\^\s*([0-9]+\.?[0-9]*)(?!\$)',
+                r'$\1^{\2}$', part
+            )
+
+            result.append(part)
+
+    return ''.join(result)
+
+
+def _insert_cjk_breaks(text: str) -> str:
+    """Insert spaces at CJK↔Latin/digit boundaries for proper line breaking.
+    Also breaks up long runs of CJK without spaces (poor LLM spacing)."""
+    if not text:
+        return text
+
+    # CJK Unicode ranges (Korean Syllables + CJK Unified)
+    CJK = r'[\uac00-\ud7af\u4e00-\u9fff\u3400-\u4dbf]'
+    LATIN = r'[a-zA-Z0-9]'
+
+    # Insert thin space at CJK→Latin boundary (e.g., "한글word" → "한글 word")
+    text = re.sub(f'({CJK})({LATIN})', r'\1 \2', text)
+    # Insert thin space at Latin→CJK boundary (e.g., "word한글" → "word 한글")
+    text = re.sub(f'({LATIN})({CJK})', r'\1 \2', text)
+
+    # Break long CJK runs (>12 chars without space) by inserting
+    # zero-width break points every ~10 chars. This gives LaTeX
+    # line-break opportunities without visible spacing changes.
+    ZWSP = r'\hspace{0pt}'  # zero-width space = invisible break point
+
+    def _break_long_cjk(match):
+        run = match.group(0)
+        if len(run) <= 12:
+            return run
+        # Insert break point every 10 characters
+        parts = []
+        for i in range(0, len(run), 10):
+            parts.append(run[i:i+10])
+        return ZWSP.join(parts)
+
+    text = re.sub(f'[{chr(0xac00)}-{chr(0xd7af)}]{{10,}}', _break_long_cjk, text)
+
+    # Prevent double spaces
+    text = re.sub(r'  +', ' ', text)
+
+    return text
 
 
 def _wrap_bullet_lists(text: str) -> str:
@@ -115,9 +200,10 @@ def _safe_escape(text: str) -> str:
     text = text.replace('&', '\\&')
     text = text.replace('%', '\\%')
     text = text.replace('#', '\\#')
-    # Don't escape _ and ^ as they might be intentional math
-    # Only escape isolated ones not near letters/digits
-    text = re.sub(r'(?<![a-zA-Z0-9\\])_(?![a-zA-Z0-9{])', '\\_', text)
+    # Escape ALL remaining bare _ and ^ outside math mode
+    # (_wrap_bare_math already converted valid math patterns like a_1 → $a_1$)
+    text = text.replace('_', '\\_')
+    text = text.replace('^', '\\^{}')
 
     # Restore protected
     for key, val in protected.items():
@@ -168,8 +254,14 @@ def generate_preamble() -> str:
 
 % ─── 한글 줄바꿈 및 여백 최적화 ───
 \XeTeXlinebreaklocale "ko"
-\XeTeXlinebreakskip 0pt plus 1pt
-\emergencystretch 3em
+\XeTeXlinebreakskip 0pt plus 3pt
+\emergencystretch 5em
+\tolerance=2000
+\hyphenpenalty=50
+\exhyphenpenalty=50
+\doublehyphendemerits=10000
+\finalhyphendemerits=5000
+\setlength{\hfuzz}{2pt}
 
 % ─── 행간 ───
 \linespread{1.52}
@@ -265,6 +357,26 @@ def generate_preamble() -> str:
   left=8pt, right=8pt, top=6pt, bottom=6pt
 }
 
+% 검증 리포트 박스
+\newtcolorbox{verificationbox}{
+  colback=white, colframe=black!60,
+  fonttitle=\sffamily\bfseries,
+  title={\small 번역 검증},
+  breakable, sharp corners,
+  boxrule=0.3pt,
+  left=8pt, right=8pt, top=4pt, bottom=4pt
+}
+
+% 딥리서치 교육 콘텐츠 박스
+\newtcolorbox{researchbox}[1][]{
+  colback=blue!3!white, colframe=blue!40!black,
+  fonttitle=\sffamily\bfseries,
+  title={#1},
+  breakable, sharp corners,
+  boxrule=0.5pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
 % ─── 교차참조 ───
 \usepackage{hyperref}
 \hypersetup{
@@ -281,6 +393,78 @@ def generate_preamble() -> str:
 """
 
 
+def _render_verification_report(verification: Dict) -> str:
+    """Render verification report as a compact LaTeX box."""
+    if not verification or verification.get("skipped"):
+        return ""
+
+    score = verification.get("score", 0)
+
+    # Score label
+    if score >= 90:
+        label = "우수"
+    elif score >= 70:
+        label = "양호"
+    elif score >= 50:
+        label = "주의"
+    else:
+        label = "경고"
+
+    # Module scores line
+    modules = []
+    for mod_name, mod_label in [("formula", "수식"), ("semantic", "의미"),
+                                 ("logic", "논리"), ("research", "검증")]:
+        mod = verification.get(mod_name, {})
+        if not mod.get("skipped"):
+            mod_score = mod.get("score", "-")
+            issue_count = len(mod.get("issues", [])) + len(mod.get("flagged", []))
+            if issue_count > 0:
+                modules.append(f"{mod_label} {mod_score} ({issue_count}건)")
+            else:
+                modules.append(f"{mod_label} {mod_score}")
+
+    modules_str = " \\quad ".join(modules)
+
+    return f"""
+\\begin{{verificationbox}}
+\\textbf{{종합 점수: {score}/100 ({label})}} \\\\[2pt]
+{{\\small {modules_str}}}
+\\end{{verificationbox}}
+\\vspace{{4pt}}
+"""
+
+
+def _render_enrichments(enrichments: List[Dict]) -> str:
+    """Render deep research enrichment entries as educational content boxes."""
+    if not enrichments:
+        return ""
+
+    latex_parts = []
+    latex_parts.append("\n\\vspace{8pt}\n{\\large\\textbf{\\textsf{심층 해설 (Deep Research)}}}\n\\vspace{4pt}\n")
+
+    for entry in enrichments:
+        title_ko = clean_for_latex(entry.get("title_ko", entry.get("term", "")))
+        explanation = clean_for_latex(entry.get("explanation", ""))
+        source = entry.get("source", "")
+
+        if not explanation:
+            continue
+
+        source_line = ""
+        if source:
+            source_escaped = clean_for_latex(source)
+            source_line = f"\n\\vspace{{2pt}}\n{{\\scriptsize \\textit{{출처: Wikipedia --- {source_escaped}}}}}"
+
+        latex_parts.append(f"""
+\\begin{{researchbox}}[{title_ko}]
+{explanation}{source_line}
+\\end{{researchbox}}
+\\vspace{{4pt}}
+""")
+
+    return "\n".join(latex_parts)
+
+
 def generate_section_latex(section_data: Dict) -> str:
     """Generate LaTeX for a single section with supplements."""
     sec_id = section_data.get("section_id", "")
@@ -290,6 +474,8 @@ def generate_section_latex(section_data: Dict) -> str:
     level = section_data.get("level", "subsection")
     font_size = section_data.get("font_size", 8.1)
     supplements = section_data.get("supplements", {})
+    verification = section_data.get("verification", {})
+    enrichments = section_data.get("enrichments", [])
 
     if not title_kr:
         title_kr = title_en
@@ -304,6 +490,12 @@ def generate_section_latex(section_data: Dict) -> str:
 
     # Main body
     body = clean_for_latex(content)
+
+    # Verification report (if present)
+    verify_latex = _render_verification_report(verification)
+
+    # Deep research enrichment content
+    enrich_latex = _render_enrichments(enrichments)
 
     # Build supplement blocks
     supp_latex = ""
@@ -369,6 +561,8 @@ def generate_section_latex(section_data: Dict) -> str:
 
 {body}
 
+{enrich_latex}
+{verify_latex}
 {supp_latex}
 """
 
