@@ -13,7 +13,7 @@ import urllib.parse
 from typing import Dict, List, Optional, Tuple
 
 # Reuse the standard glossary from translator
-from translator import MATH_GLOSSARY
+from pcm.core.translator import MATH_GLOSSARY
 
 
 class CheckResult:

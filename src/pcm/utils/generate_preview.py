@@ -1,7 +1,9 @@
-import os
-import subprocess
+import sys
 from pathlib import Path
-from json_to_latex import generate_full_document
+# Add src to sys.path
+sys.path.append(str(Path(__file__).parent.parent.parent / "src"))
+
+from pcm.core.json_to_latex import generate_full_document
 import shutil
 
 def build_pdf(output_dir, part_label):

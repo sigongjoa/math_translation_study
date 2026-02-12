@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """Quick test: run enrichment only on 2 sections, then build PDF with enrichment boxes."""
 
+import sys
 import json
 import subprocess
 import shutil
 from pathlib import Path
-from verifier import TranslationVerifier
+
+# Add src to sys.path
+sys.path.append(str(Path(__file__).parent.parent / "src"))
+
+from pcm.core.verifier import TranslationVerifier
 
 SECTIONS_DIR = Path("output_test/sections")
 LATEX_DIR = Path("output_test/latex_clean")
@@ -66,7 +71,7 @@ def main():
 
     # Build PDF with all sections (including enrichments from updated JSON)
     print("\nBuilding PDF...")
-    from test_verify_clean import main as build_pdf
+    from tests.test_verify_clean import main as build_pdf
     build_pdf()
 
 

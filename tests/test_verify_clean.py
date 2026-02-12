@@ -4,11 +4,15 @@ Clean test: generate LaTeX with verification boxes only (no supplements).
 Strips problematic content to ensure clean PDF compilation.
 """
 
+import sys
 import json
 import re
 import subprocess
 import shutil
 from pathlib import Path
+
+# Add src to sys.path
+sys.path.append(str(Path(__file__).parent.parent / "src"))
 
 SECTIONS_DIR = Path("output_test/sections")
 LATEX_DIR = Path("output_test/latex_clean")
@@ -54,7 +58,7 @@ def render_enrichments(enrichments: list) -> str:
     """Render deep research enrichment entries as educational content boxes."""
     if not enrichments:
         return ""
-    from json_to_latex import clean_for_latex
+    from pcm.core.json_to_latex import clean_for_latex
     parts = []
     parts.append("\n\\vspace{8pt}\n{\\large\\textbf{\\textsf{심층 해설 (Deep Research)}}}\n\\vspace{4pt}\n")
     for entry in enrichments:
@@ -92,7 +96,7 @@ def main():
     print(f"Loaded {len(sections)} sections")
 
     # Build LaTeX
-    from json_to_latex import generate_preamble, clean_for_latex
+    from pcm.core.json_to_latex import generate_preamble, clean_for_latex
 
     preamble = generate_preamble()
     body = []

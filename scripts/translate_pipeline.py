@@ -3,15 +3,20 @@
 Main translation pipeline: PDF → Parse → Translate → Polish → Verify → Supplements → LaTeX → PDF
 """
 
+import sys
 import json
 import argparse
 import subprocess
 from pathlib import Path
-from pdf_parser import PDFParser
-from translator import OllamaTranslator
-from supplement_generator import SupplementGenerator
-from verifier import TranslationVerifier
-from json_to_latex import generate_full_document
+
+# Add src to sys.path
+sys.path.append(str(Path(__file__).parent.parent / "src"))
+
+from pcm.core.pdf_parser import PDFParser
+from pcm.core.translator import OllamaTranslator
+from pcm.core.supplement_generator import SupplementGenerator
+from pcm.core.verifier import TranslationVerifier
+from pcm.core.json_to_latex import generate_full_document
 from tqdm import tqdm
 
 TOTAL_STEPS = 8

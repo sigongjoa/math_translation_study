@@ -8,12 +8,12 @@ def run_pipeline(vol="I", chapters=None, skip_scrape=False, skip_translate=False
     if chapters is None:
         chapters = [1]
 
-    from feynman_scraper import FeynmanScraper
-    from feynman_parser import FeynmanParser
-    from feynman_translator import FeynmanTranslator
-    from feynman_enricher import FeynmanEnricher
-    from feynman_latex_gen import FeynmanLatexGen
-    from feynman_batch_img import batch_convert
+    from pcm.feynman.scraper import FeynmanScraper
+    from pcm.feynman.parser import FeynmanParser
+    from pcm.feynman.translator import FeynmanTranslator
+    from pcm.feynman.enricher import FeynmanEnricher
+    from pcm.feynman.latex_gen import FeynmanLatexGen
+    from pcm.feynman.batch_img import batch_convert
 
     scraper = FeynmanScraper(output_dir="feynman_raw")
     parser = FeynmanParser(raw_dir="feynman_raw", output_dir="feynman_json")

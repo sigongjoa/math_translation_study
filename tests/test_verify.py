@@ -4,12 +4,17 @@ Test script: run verification on existing translated sections and build PDF.
 Uses output_test/sections/ as input (already translated data).
 """
 
+import sys
 import json
 import subprocess
 import shutil
 from pathlib import Path
-from verifier import TranslationVerifier
-from json_to_latex import generate_full_document
+
+# Add src to sys.path
+sys.path.append(str(Path(__file__).parent.parent / "src"))
+
+from pcm.core.verifier import TranslationVerifier
+from pcm.core.json_to_latex import generate_full_document
 
 OUTPUT_DIR = Path("output_test")
 SECTIONS_DIR = OUTPUT_DIR / "sections"
