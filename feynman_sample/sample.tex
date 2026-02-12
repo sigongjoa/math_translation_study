@@ -1,0 +1,626 @@
+\documentclass[11pt, a4paper, openany]{book}
+
+% ═══════════════════════════════════════════════════════════
+%  파인만 물리학 강의 — 한국어 번역 샘플 페이지 디자인
+%  Design: 대화체 강의 + 교양 과학서 + 주석·해설 + 비주얼
+% ═══════════════════════════════════════════════════════════
+
+% ─── 여백: 넉넉한 마진, 사이드노트 공간 확보 ───
+\usepackage[
+  top=28mm,
+  bottom=25mm,
+  inner=25mm,
+  outer=30mm,
+  marginparwidth=0mm,
+  headheight=14pt,
+  headsep=14pt
+]{geometry}
+
+% ─── 한글 ───
+\usepackage{kotex}
+\usepackage{fontspec}
+
+% ─── 폰트: 본문은 세리프, UI요소는 산세리프 ───
+\setmainfont{Noto Serif CJK KR}[
+  UprightFont={Noto Serif CJK KR},
+  BoldFont={Noto Serif CJK KR Bold},
+  Ligatures=TeX,
+]
+\setsansfont{Noto Sans CJK KR}[
+  UprightFont={Noto Sans CJK KR},
+  BoldFont={Noto Sans CJK KR Bold},
+  Ligatures=TeX,
+]
+\setmonofont{Noto Sans Mono CJK KR}[Scale=0.85]
+
+% ─── 수식 ───
+\usepackage{amsmath, amssymb, amsthm}
+
+% ─── 그래픽 ───
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{
+  arrows.meta, positioning, shapes, calc,
+  decorations.pathreplacing, decorations.markings,
+  patterns, shadows, backgrounds
+}
+
+% ─── 색상 팔레트 ───
+\usepackage{xcolor}
+\definecolor{feynred}{HTML}{C0392B}
+\definecolor{feynblue}{HTML}{2471A3}
+\definecolor{feyndark}{HTML}{1B2631}
+\definecolor{feynnote}{HTML}{F0E6D3}
+\definecolor{feynlight}{HTML}{EBF5FB}
+\definecolor{feyngreen}{HTML}{1E8449}
+\definecolor{feyngray}{HTML}{5D6D7E}
+\definecolor{feynwarm}{HTML}{FDF2E9}
+\definecolor{feyndeep}{HTML}{154360}
+
+% ─── 한글 줄바꿈 ───
+\XeTeXlinebreaklocale "ko"
+\XeTeXlinebreakskip 0pt plus 3pt
+\emergencystretch 5em
+\tolerance=2000
+\hyphenpenalty=50
+\setlength{\hfuzz}{2pt}
+
+% ─── 행간: 읽기 편한 넉넉한 간격 ───
+\linespread{1.65}
+
+% ─── 단락 ───
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{3pt plus 1pt}
+
+% ─── 박스 디자인 (tcolorbox) ───
+\usepackage[most]{tcolorbox}
+
+% ◆ 파인만의 말 — 인용/강조 블록
+\newtcolorbox{feynmansays}[1][]{
+  enhanced,
+  colback=feynwarm,
+  colframe=feynred!60!black,
+  coltitle=white,
+  fonttitle=\sffamily\bfseries\small,
+  title={\raisebox{-1pt}{\textbf{!}}~파인만이 강조합니다},
+  sharp corners,
+  boxrule=0pt,
+  leftrule=4pt,
+  breakable,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+  shadow={1pt}{-1pt}{0pt}{black!15},
+  #1
+}
+
+% ◆ 역주 (번역자 주석)
+\newtcolorbox{translatornote}[1][]{
+  enhanced,
+  colback=feynnote,
+  colframe=feyngray!40,
+  fonttitle=\sffamily\bfseries\small,
+  title={\raisebox{-0.5pt}{\textsf{*}} 역주},
+  sharp corners,
+  boxrule=0pt,
+  leftrule=3pt,
+  breakable,
+  left=10pt, right=10pt, top=6pt, bottom=6pt,
+  fontupper=\small,
+  #1
+}
+
+% ◆ 심층 해설 (Deep Research)
+\newtcolorbox{deepresearch}[1][]{
+  enhanced,
+  colback=feynlight,
+  colframe=feynblue!70,
+  coltitle=white,
+  fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  attach boxed title to top left={yshift=-2mm, xshift=4mm},
+  boxed title style={
+    colback=feynblue!80,
+    sharp corners,
+    boxrule=0pt,
+  },
+  sharp corners,
+  boxrule=0.6pt,
+  breakable,
+  left=10pt, right=10pt, top=10pt, bottom=8pt,
+  shadow={1.5pt}{-1.5pt}{0pt}{feynblue!15},
+}
+
+% ◆ 핵심 개념 박스
+\newtcolorbox{keyconcept}[1][]{
+  enhanced,
+  colback=white,
+  colframe=feyndark,
+  coltitle=white,
+  fonttitle=\sffamily\bfseries,
+  title={#1},
+  attach boxed title to top center={yshift=-3mm},
+  boxed title style={
+    colback=feyndark,
+    sharp corners,
+    boxrule=0pt,
+  },
+  sharp corners,
+  boxrule=1pt,
+  breakable,
+  left=12pt, right=12pt, top=12pt, bottom=10pt,
+}
+
+% ◆ 수식 하이라이트 박스
+\newtcolorbox{mathbox}{
+  enhanced,
+  colback=feynwarm!50,
+  colframe=feynred!40,
+  sharp corners,
+  boxrule=0.5pt,
+  left=14pt, right=14pt, top=10pt, bottom=10pt,
+  before skip=12pt,
+  after skip=12pt,
+}
+
+% ◆ 다이어그램 캡션 박스
+\newtcolorbox{diagrambox}[1][]{
+  enhanced,
+  colback=white,
+  colframe=feyngray!50,
+  fonttitle=\sffamily\small,
+  title={#1},
+  attach boxed title to top center={yshift=-2mm},
+  boxed title style={
+    colback=feyngray!20,
+    colframe=feyngray!50,
+    boxrule=0.4pt,
+    sharp corners,
+  },
+  sharp corners,
+  boxrule=0.4pt,
+  breakable,
+  left=8pt, right=8pt, top=10pt, bottom=8pt,
+}
+
+% ◆ 연습 문제 박스
+\newtcolorbox{exercisebox}{
+  enhanced,
+  colback=feyngreen!5,
+  colframe=feyngreen!60,
+  fonttitle=\sffamily\bfseries\small,
+  title={\textsf{?} 생각해 봅시다},
+  sharp corners,
+  boxrule=0pt,
+  leftrule=4pt,
+  breakable,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+}
+
+% ─── 헤더/푸터 ───
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{{\small\sffamily\color{feyngray} 파인만 물리학 강의 \hfill \thepage}}
+\fancyhead[RO]{{\small\sffamily\color{feyngray} \thepage \hfill \rightmark}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\color{feyngray!40}\hrule width\headwidth height\headrulewidth}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\small\color{feyngray}\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% ─── 제목 스타일 ───
+\usepackage{titlesec}
+
+% 챕터: 큰 번호 + 제목 + 원제
+\titleformat{\chapter}[display]
+  {\normalfont}
+  {\hfill{\fontsize{72}{72}\selectfont\sffamily\color{feynred!20}\thechapter}}
+  {-20pt}
+  {\sffamily\bfseries\Huge\color{feyndark}}
+  [\vspace{2pt}{\color{feyngray!40}\titlerule[1pt]}]
+\titlespacing*{\chapter}{0pt}{-30pt}{30pt}
+
+\titleformat{\section}[hang]
+  {\sffamily\bfseries\LARGE\color{feyndeep}}
+  {\thesection}{10pt}{}
+\titlespacing*{\section}{0pt}{24pt}{10pt}
+
+\titleformat{\subsection}[hang]
+  {\sffamily\bfseries\large\color{feyndark}}
+  {\thesubsection}{8pt}{}
+\titlespacing*{\subsection}{0pt}{16pt}{6pt}
+
+% ─── 하이퍼링크 ───
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=feynblue,
+  urlcolor=feynblue!70,
+  pdfborder={0 0 0},
+  bookmarksnumbered=true,
+  pdftitle={파인만 물리학 강의 — 한국어 번역},
+  pdfauthor={AI 보조 번역 시스템},
+}
+
+% ─── 목차 ───
+\setcounter{tocdepth}{2}
+
+% ─── 열거 ───
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em, itemsep=2pt}
+\setlist[enumerate]{leftmargin=1.5em, itemsep=2pt}
+
+% ─── 드롭캡 (첫 글자 장식) ───
+\usepackage{lettrine}
+
+% ─── 에피그라프 ───
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{0.75\textwidth}
+\renewcommand{\epigraphflush}{center}
+\renewcommand{\epigraphrule}{0pt}
+
+% ─── 각주 스타일 ───
+\usepackage[bottom,hang]{footmisc}
+\setlength{\footnotemargin}{0.8em}
+
+% ═══════════════════════════════════════════════════════════
+\begin{document}
+
+% ─────────────────────────────────────────
+%  표지
+% ─────────────────────────────────────────
+\begin{titlepage}
+\begin{tikzpicture}[remember picture, overlay]
+  % 배경 그래디언트 효과
+  \fill[feyndark] (current page.south west) rectangle (current page.north east);
+
+  % 장식 원 (파인만 다이어그램 느낌)
+  \foreach \x/\y/\r/\o in {3/20/2.5/8, 15/24/1.8/6, 8/5/3/5, 17/8/2/7, 12/15/1.5/4} {
+    \draw[feynred!\o 0, line width=0.8pt] (\x, \y) circle (\r);
+  }
+
+  % 파인만 다이어그램 모티프
+  \begin{scope}[shift={(11,12)}, scale=1.5]
+    \draw[white!40, line width=1.2pt, decorate, decoration={snake, amplitude=3pt, segment length=8pt}]
+      (-2,0) -- (0,0);
+    \draw[white!40, line width=1.2pt]
+      (0,0) -- (1.5,1.2);
+    \draw[white!40, line width=1.2pt]
+      (0,0) -- (1.5,-1.2);
+    \filldraw[white!50] (0,0) circle (3pt);
+    \draw[white!40, line width=1.2pt, -Stealth]
+      (1.5,1.2) -- (3,2);
+    \draw[white!40, line width=1.2pt, decorate, decoration={snake, amplitude=2pt, segment length=6pt}]
+      (1.5,-1.2) -- (3,-0.5);
+  \end{scope}
+
+  % 제목
+  \node[anchor=west] at (2.5, 18) {
+    \begin{minipage}{14cm}
+      {\fontsize{14}{18}\selectfont\sffamily\color{feynred!80}\bfseries
+        THE FEYNMAN LECTURES ON PHYSICS}
+    \end{minipage}
+  };
+
+  \node[anchor=west] at (2.5, 15.5) {
+    \begin{minipage}{14cm}
+      {\fontsize{36}{42}\selectfont\sffamily\color{white}\bfseries
+        파인만 물리학 강의}\\[8pt]
+      {\fontsize{16}{20}\selectfont\sffamily\color{white!70}
+        제1권: 역학, 복사, 열}
+    \end{minipage}
+  };
+
+  % 저자
+  \node[anchor=west] at (2.5, 8) {
+    \begin{minipage}{14cm}
+      {\Large\sffamily\color{white!80}
+        Richard P. Feynman}\\[4pt]
+      {\normalsize\sffamily\color{white!50}
+        Robert B. Leighton \quad Matthew Sands}\\[16pt]
+      {\small\sffamily\color{feynred!60}
+        한국어 번역 · AI 보조 번역 시스템}
+    \end{minipage}
+  };
+
+  % 하단
+  \node[anchor=south] at (current page.south) [yshift=15mm] {
+    {\small\sffamily\color{white!30}
+      개인 학습용 · 비배포 · Sample Design v1.0}
+  };
+\end{tikzpicture}
+\end{titlepage}
+
+% ─────────────────────────────────────────
+%  목차 (간략)
+% ─────────────────────────────────────────
+\tableofcontents
+\clearpage
+
+% ─────────────────────────────────────────
+%  Chapter 1: 움직이는 원자
+% ─────────────────────────────────────────
+\chapter{움직이는 원자}
+\label{ch:atoms-in-motion}
+
+\vspace{-8pt}
+{\large\sffamily\color{feyngray} Atoms in Motion}
+
+\vspace{12pt}
+\epigraph{\itshape ``If, in some cataclysm, all of scientific knowledge were to be
+destroyed, and only one sentence passed on to the next generation of creatures,
+what statement would contain the most information in the fewest words?''}{--- \textup{Richard P. Feynman}}
+
+\vspace{8pt}
+
+% ─── 1-1. 서론 ───
+\section{서론}
+
+\lettrine[lines=2, loversize=0.15, nindent=0.5em]{\color{feynred}\textsf{이}}{} 장에서는 물질의 원자적 가설에 대해 이야기해 보려 합니다. 아, ``가설''이란 표현은 좀 약하군요 --- 사실상 물질이 원자로 이루어져 있다는 것은 과학의 가장 핵심적인 사실이라 해도 과언이 아닙니다.
+
+만약 어떤 대재앙이 일어나서 모든 과학적 지식이 파괴되고, 단 \textbf{한 문장}만 다음 세대의 생명체에게 전달할 수 있다면, 가장 적은 단어로 가장 많은 정보를 담을 수 있는 문장은 무엇일까요?
+
+\begin{feynmansays}
+저는 그것이 \textbf{원자 가설}이라고 생각합니다. 모든 물질은 원자로 이루어져 있다 --- 끊임없이 움직이며, 조금 떨어져 있을 때는 서로 끌어당기지만, 너무 가까이 밀어 넣으려 하면 밀어내는, 그런 작은 입자들로 말이죠.
+\end{feynmansays}
+
+이 한 문장 안에 세상에 대한 \textit{엄청난} 양의 정보가 담겨 있습니다. 물론 약간의 상상력과 사고력을 동원해야 하지만요.
+
+\begin{translatornote}
+파인만은 이 강의를 1961--1963년 Caltech 1, 2학년 학생들을 대상으로 진행했습니다. 그의 강의 스타일은 학생들에게 마치 동료 과학자에게 이야기하듯 설명하는 것이 특징입니다. 이 번역에서는 그 대화체 톤을 최대한 살리려 했습니다.
+\end{translatornote}
+
+
+% ─── 1-2. 물질은 원자로 이루어져 있다 ───
+\section{물질은 원자로 이루어져 있다}
+
+자, 그러면 원자가 어떻게 생겼는지 한번 상상해 봅시다. 원자의 반지름은 대략 $1$~$2 \times 10^{-8}$\,cm 정도입니다. $10^{-8}$\,cm를 보통 \textbf{옹스트롬}(\AA)이라고 부르는데, 그러니까 원자의 크기는 1--2\,\AA{} 정도인 거죠.
+
+이것을 실감하기 위해 이런 비유를 들어볼게요.
+
+\begin{keyconcept}[원자의 크기를 실감하기]
+사과 하나를 지구만큼 크게 부풀린다고 상상해 보세요. 그러면 사과 안의 원자들은 대략 원래 사과만한 크기가 됩니다.
+
+\begin{center}
+{\large 사과 속 원자 : 사과 = 사과 : 지구}
+\end{center}
+
+\vspace{4pt}
+이 비율이 바로 $10^{-8}$이 의미하는 것입니다.
+\end{keyconcept}
+
+\subsection{물의 확대}
+
+이제 물 한 방울을 아주 가까이에서 들여다본다고 상상해 봅시다. 보통 배율로는 그냥 매끈한 물이 보이겠죠. 하지만 배율을 $2{,}000$배 정도 올리면 --- 이 정도면 ``아주 좋은'' 광학 현미경이에요 --- 그래도 여전히 매끈한 물입니다.
+
+배율을 더 올려봅시다.
+
+\begin{diagrambox}[그림 1-1. 물의 확대 ($10^9$배)]
+\centering
+\begin{tikzpicture}[scale=0.9]
+  % 배경
+  \fill[feynlight!50, rounded corners=3pt] (-0.5,-0.5) rectangle (11.5,7.5);
+
+  % 물 분자들
+  \foreach \x/\y/\rot in {
+    1.5/6/10, 3.5/6.2/-15, 5.5/5.8/25, 7.5/6/-5, 9.5/6.3/20,
+    0.8/4.2/30, 2.8/4/-10, 4.8/4.5/15, 6.8/4.2/-20, 8.8/4/5,
+    1.5/2.2/-25, 3.5/2/35, 5.5/2.3/0, 7.5/2.5/-15, 9.5/2/10,
+    2.2/0.5/20, 4.2/0.3/-30, 6.2/0.7/15, 8.2/0.5/-5
+  } {
+    \begin{scope}[shift={(\x,\y)}, rotate=\rot]
+      % 산소 (큰 원)
+      \filldraw[feynred!70, draw=feynred!90, line width=0.6pt]
+        (0,0) circle (0.35);
+      \node[font=\tiny\sffamily\bfseries, white] at (0,0) {O};
+
+      % 수소 2개 (작은 원)
+      \filldraw[feynblue!60, draw=feynblue!80, line width=0.5pt]
+        (-0.38, 0.28) circle (0.22);
+      \node[font=\tiny\sffamily, white] at (-0.38, 0.28) {\textbf{H}};
+
+      \filldraw[feynblue!60, draw=feynblue!80, line width=0.5pt]
+        (0.38, 0.28) circle (0.22);
+      \node[font=\tiny\sffamily, white] at (0.38, 0.28) {\textbf{H}};
+    \end{scope}
+  }
+
+  % 범례
+  \node[anchor=south west, font=\small\sffamily] at (-0.3, -0.3) {
+    \textcolor{feynred!80}{\textbullet}~산소\quad
+    \textcolor{feynblue!70}{\textbullet}~수소
+  };
+\end{tikzpicture}
+\end{diagrambox}
+
+약 $10^9$배로 확대하면, 드디어 이런 모습이 보이기 시작합니다. 물의 원자들이 서로 달라붙어서 뭉쳐 다니는 모습이죠. 이 덩어리 하나하나가 바로 \textbf{물 분자}($\text{H}_2\text{O}$)입니다.
+
+각 물 분자는 수소 원자 2개와 산소 원자 1개로 이루어져 있는데, 이 세 원자가 $105.5°$의 각도로 결합하고 있습니다.
+
+\begin{mathbox}
+\begin{equation}
+  \text{H}_2\text{O} : \quad
+  \underbrace{d(\text{O--H}) = 0.957\,\text{\AA}}_{\text{결합 길이}}
+  \qquad
+  \underbrace{\angle(\text{H--O--H}) = 104.5°}_{\text{결합 각도}}
+\end{equation}
+\end{mathbox}
+
+
+\begin{deepresearch}{심층 해설: 물 분자의 구조}
+\textbf{물 분자}는 산소 원자 1개와 수소 원자 2개가 공유 결합으로 연결된 구조입니다. 산소의 전기음성도가 수소보다 훨씬 크기 때문에, 전자가 산소 쪽으로 치우치면서 분자 전체가 \textbf{극성}을 띠게 됩니다.
+
+이 극성 때문에 물 분자들은 서로 \textbf{수소 결합}(hydrogen bond)을 형성합니다. 수소 결합은 분자 내 공유 결합보다 약하지만, 물의 여러 특이한 성질 --- 높은 끓는점, 높은 비열, 얼음이 물보다 가벼운 현상 --- 을 설명하는 핵심 원리입니다.
+
+\vspace{4pt}
+{\scriptsize\color{feyngray} 출처: Wikipedia --- Water (molecule), Hydrogen bond}
+\end{deepresearch}
+
+
+% ─── 1-3. 원자의 운동 ───
+\section{원자의 운동}
+
+자, 이제 이 원자들이 어떻게 움직이는지 이야기해 봅시다. 원자들은 계속 꼬물꼬물 움직이고 있습니다. 사실 ``열''이라는 것이 바로 이 원자들의 무작위 운동에 다름 아닙니다.
+
+\textbf{온도}가 올라가면 이 운동이 더 활발해집니다. 반대로 온도가 낮아지면 움직임이 줄어들겠죠. \textbf{절대영도}($0\,\text{K}$, 즉 $-273.15\,°\text{C}$)에서는 --- 글쎄, 양자역학 때문에 완전히 멈추지는 않지만 --- 최소한의 에너지만 갖게 됩니다.
+
+\begin{translatornote}
+파인만은 여기서 ``영점 에너지(zero-point energy)''를 암시하고 있습니다. 양자역학의 하이젠베르크 불확정성 원리에 의하면, 입자는 절대영도에서도 완전히 정지할 수 없습니다. 이 주제는 제3권(양자역학)에서 자세히 다룹니다.
+\end{translatornote}
+
+실온에서 공기 분자의 평균 속력이 얼마나 되는지 아세요?
+
+\begin{mathbox}
+\begin{equation}
+  v_{\text{rms}} = \sqrt{\frac{3k_BT}{m}}
+  \approx 500\,\text{m/s} \quad (\text{실온, 질소 분자})
+\end{equation}
+
+\vspace{4pt}
+\begin{center}
+{\small 이것은 음속($343\,\text{m/s}$)보다 빠릅니다!}
+\end{center}
+\end{mathbox}
+
+놀랍지 않나요? 지금 여러분 주위의 공기 분자들이 총알보다 빠른 속도로 날아다니고 있는 겁니다. 다만 사방팔방으로 부딪치면서 날아다니기 때문에, 한 방향으로 ``net movement''는 거의 없는 것이죠.
+
+
+% ─── 기체, 액체, 고체 다이어그램 ───
+\begin{diagrambox}[그림 1-2. 물질의 세 가지 상태 --- 원자 수준에서 본 모습]
+\centering
+\begin{tikzpicture}[scale=0.85]
+  % ─── 기체 ───
+  \begin{scope}[shift={(0,0)}]
+    \draw[feyngray!40, rounded corners=4pt] (-0.3,-0.3) rectangle (4.3,4.3);
+    \node[font=\sffamily\bfseries, feynred] at (2, 4.7) {기체 (Gas)};
+
+    \foreach \x/\y/\dx/\dy in {
+      0.5/3.5/0.3/0.15, 3.2/3.8/0.1/-0.3,
+      1.8/2.5/-0.2/0.25, 3.5/1.2/0.15/-0.1,
+      0.8/0.8/-0.1/0.3, 2.5/0.5/0.25/0.1,
+      3.8/2.8/-0.3/-0.15, 1.2/1.5/0.2/-0.2
+    } {
+      \filldraw[feynblue!60] (\x,\y) circle (0.15);
+      \draw[-Stealth, feynred!70, line width=0.7pt] (\x,\y) -- ++(\dx*2.5,\dy*2.5);
+    }
+    \node[font=\scriptsize\sffamily, feyngray, text width=3.5cm, align=center] at (2,-0.7) {
+      분자 간 거리 멀고\\자유롭게 운동
+    };
+  \end{scope}
+
+  % ─── 액체 ───
+  \begin{scope}[shift={(5.5,0)}]
+    \draw[feyngray!40, rounded corners=4pt] (-0.3,-0.3) rectangle (4.3,4.3);
+    \node[font=\sffamily\bfseries, feynblue] at (2, 4.7) {액체 (Liquid)};
+
+    \foreach \x/\y in {
+      0.6/3.5, 1.4/3.6, 2.2/3.4, 3.0/3.5, 3.6/3.3,
+      0.5/2.7, 1.3/2.6, 2.1/2.8, 2.9/2.7, 3.5/2.5,
+      0.7/1.9, 1.5/1.8, 2.3/2.0, 3.1/1.9, 3.7/1.7,
+      0.6/1.1, 1.4/1.0, 2.2/1.2, 3.0/1.1, 3.6/0.9,
+      0.8/0.4, 1.6/0.3, 2.4/0.5, 3.2/0.4
+    } {
+      \filldraw[feynblue!50] (\x,\y) circle (0.15);
+    }
+    % 약간의 움직임 표시
+    \foreach \x/\y/\a in {1.4/3.6/30, 2.9/2.7/-45, 1.5/1.8/120, 3.0/1.1/-70} {
+      \draw[-Stealth, feynred!50, line width=0.5pt] (\x,\y) -- ++(\a:0.4);
+    }
+    \node[font=\scriptsize\sffamily, feyngray, text width=3.5cm, align=center] at (2,-0.7) {
+      가까이 모여 있지만\\위치 교환 가능
+    };
+  \end{scope}
+
+  % ─── 고체 ───
+  \begin{scope}[shift={(11,0)}]
+    \draw[feyngray!40, rounded corners=4pt] (-0.3,-0.3) rectangle (4.3,4.3);
+    \node[font=\sffamily\bfseries, feyngreen] at (2, 4.7) {고체 (Solid)};
+
+    % 격자 결합선 (가로)
+    \foreach \y in {0.5, 1.3, 2.1, 2.9, 3.7} {
+      \draw[feyngray!40, line width=0.4pt] (0.5,\y) -- (3.7,\y);
+    }
+    % 격자 결합선 (세로)
+    \foreach \x in {0.5, 1.3, 2.1, 2.9, 3.7} {
+      \draw[feyngray!40, line width=0.4pt] (\x,0.5) -- (\x,3.7);
+    }
+    % 원자들
+    \foreach \x in {0.5, 1.3, 2.1, 2.9, 3.7} {
+      \foreach \y in {0.5, 1.3, 2.1, 2.9, 3.7} {
+        \filldraw[feyngreen!50] (\x,\y) circle (0.15);
+      }
+    }
+    % 진동 표시
+    \foreach \x/\y/\a in {1.3/2.9/20, 2.9/2.1/-30, 2.1/1.3/45, 3.7/3.7/-15} {
+      \draw[<->, feynred!40, line width=0.4pt] (\x,\y) ++(\a:0.25) -- ++(\a+180:0.5);
+    }
+    \node[font=\scriptsize\sffamily, feyngray, text width=3.5cm, align=center] at (2,-0.7) {
+      고정 위치에서\\진동만 함
+    };
+  \end{scope}
+\end{tikzpicture}
+\end{diagrambox}
+
+
+% ─── 1-4. 기체의 압력 ───
+\section{기체의 압력}
+
+기체 분자가 용기 벽에 부딪치면 무슨 일이 일어날까요? 분자가 벽에 튕겨 나올 때마다 벽에 약간의 ``밀침''을 줍니다. 수십억 개의 분자가 매초마다 벽에 부딪치니까, 이 밀침이 모이면 우리가 느끼는 \textbf{압력}이 되는 거죠.
+
+이것을 수식으로 정리하면 바로 우리가 잘 아는 이상기체 법칙이 나옵니다:
+
+\begin{mathbox}
+\begin{equation}
+  PV = nRT = Nk_BT
+\end{equation}
+
+\vspace{6pt}
+\begin{center}
+\begin{tabular}{ll}
+  $P$ & 압력 (pressure) \\
+  $V$ & 부피 (volume) \\
+  $N$ & 분자의 수 \\
+  $k_B$ & 볼츠만 상수 $= 1.38 \times 10^{-23}\,\text{J/K}$ \\
+  $T$ & 절대 온도 (kelvin)
+\end{tabular}
+\end{center}
+\end{mathbox}
+
+\begin{exercisebox}
+\begin{enumerate}
+\item 만약 방 안의 공기 분자가 모두 같은 방향으로 움직인다면 어떤 일이 벌어질까요? (힌트: 바람이 불겠죠!)
+
+\item 풍선을 뜨거운 곳에 두면 커지고, 차가운 곳에 두면 줄어드는 이유를 원자 수준에서 설명해 보세요.
+
+\item 볼츠만 상수 $k_B$의 물리적 의미는 무엇일까요? ``온도 1도당 분자 1개가 가지는 에너지''와 어떤 관계가 있을까요?
+\end{enumerate}
+\end{exercisebox}
+
+
+\begin{deepresearch}{심층 해설: 볼츠만 상수와 통계역학의 탄생}
+\textbf{루트비히 볼츠만}(Ludwig Boltzmann, 1844--1906)은 오스트리아의 물리학자로, 열역학 법칙을 원자의 통계적 행동으로 설명하는 \textbf{통계역학}의 창시자입니다.
+
+19세기 말, ``원자가 정말 존재하는가''는 뜨거운 논쟁거리였습니다. 에른스트 마흐(Ernst Mach)를 비롯한 실증주의 철학자들은 직접 관측할 수 없는 원자의 존재를 부정했습니다. 볼츠만은 이 논쟁의 한가운데서 원자론을 끝까지 옹호했으나, 극심한 학문적 고립감 속에서 1906년 스스로 목숨을 끊었습니다.
+
+아이러니하게도, 그가 죽은 바로 다음 해에 아인슈타인의 브라운 운동 이론과 페랭(Perrin)의 실험이 원자의 존재를 확정적으로 증명했습니다. 그의 묘비에는 유명한 엔트로피 공식이 새겨져 있습니다:
+$$S = k_B \ln W$$
+
+\vspace{4pt}
+{\scriptsize\color{feyngray} 출처: Wikipedia --- Ludwig Boltzmann, Statistical mechanics}
+\end{deepresearch}
+
+
+\vspace{16pt}
+\begin{center}
+\color{feyngray}\rule{0.3\textwidth}{0.4pt}
+
+\vspace{8pt}
+{\small\sffamily\color{feyngray}
+--- 샘플 페이지 디자인 끝 ---\\[4pt]
+이 레이아웃은 파인만 물리학 강의 전체 번역에 적용될 디자인 언어입니다.}
+\end{center}
+
+\end{document}

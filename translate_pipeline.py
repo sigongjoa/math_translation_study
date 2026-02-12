@@ -125,10 +125,29 @@ def main():
 
             for section_id, section_data in tqdm(sections.items(),
                                                   desc="Translating", unit="section"):
+                
+                # Resume logic: Check if JSON already exists with translation
+                safe_filename = section_id.replace(".", "_") + ".json"
+                json_path = Path(args.output) / "sections" / safe_filename
+                
+                if json_path.exists():
+                    try:
+                        with open(json_path, "r", encoding="utf-8") as f:
+                            existing_data = json.load(f)
+                            if existing_data.get("content_translated"):
+                                print(f"  Section {section_id} already translated, skipping...")
+                                sections[section_id] = existing_data
+                                continue
+                    except Exception as e:
+                        print(f"  Warning: Could not read existing JSON for {section_id}: {e}")
+
                 sections[section_id] = translator.translate_section(
                     section_data,
                     do_polish=not args.skip_polish
                 )
+                
+                # Incremental save
+                pdf_parser.save_sections_to_json({section_id: sections[section_id]})
         else:
             print(f"[3/{TOTAL_STEPS}] Skipping translation\n")
 
@@ -157,6 +176,9 @@ def main():
                       f"S:{report.get('semantic', {}).get('score', '-')} "
                       f"L:{report.get('logic', {}).get('score', '-')} "
                       f"R:{report.get('research', {}).get('score', '-')})")
+                
+                # Incremental save after verification
+                pdf_parser.save_sections_to_json({section_id: sections[section_id]})
 
             if verify_scores:
                 avg = sum(verify_scores) / len(verify_scores)
@@ -195,6 +217,9 @@ def main():
                 supplements = supp_generator.generate_all_supplements(section_data)
                 sections[section_id]["supplements"] = supplements
                 print(f"    → Generated: {', '.join(supplements.keys()) if supplements else 'none'}")
+                
+                # Incremental save after supplements
+                pdf_parser.save_sections_to_json({section_id: sections[section_id]})
         else:
             print(f"[5/{TOTAL_STEPS}] Skipping supplement generation\n")
 
