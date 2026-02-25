@@ -100,11 +100,20 @@ MATH_GLOSSARY = {
 
 
 class OllamaTranslator:
-    def __init__(self, model_name: str = "gemma2:9b", base_url: str = "http://localhost:11434"):
+    def __init__(self, model_name: str = "gemma2:9b", base_url: str = "http://localhost:11434", use_wsd: bool = True):
         self.model_name = model_name
         self.base_url = base_url
         self.api_url = f"{base_url}/api/generate"
         self.glossary = MATH_GLOSSARY
+        self.wsd_agent = None
+        if use_wsd:
+            try:
+                import sys, os
+                sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+                from pcm.core.wsd_agent import WSDAgent
+                self.wsd_agent = WSDAgent()
+            except Exception as e:
+                print(f"[WSD] 로드 실패 (무시): {e}")
 
     def _build_glossary_hint(self, text: str) -> str:
         """Build glossary hints for terms found in the text."""
@@ -124,6 +133,15 @@ class OllamaTranslator:
 
         glossary_hint = self._build_glossary_hint(text)
 
+        # WSD Agent 통합: 도메인 감지 + 다의어 번역 가이드 주입
+        wsd_hint = ""
+        if self.wsd_agent:
+            try:
+                analysis = self.wsd_agent.analyze(text)
+                wsd_hint = analysis.get("prompt_injection", "")
+            except Exception:
+                pass
+
         prompt = f"""You are a professional Korean translator specializing in mathematics. Translate the following English text into natural Korean.
 
 STRICT RULES:
@@ -138,6 +156,8 @@ STRICT RULES:
 - Write subscripts as LaTeX: a_i, not a<sub>i</sub>
 
 {glossary_hint}
+
+{wsd_hint}
 
 English text:
 {text}
