@@ -1,0 +1,15 @@
+[algebra] 감지도메인=algebra, 다의어수=4
+  field -> 체(體)
+  ring -> 환(環)
+  kernel -> 핵(核)
+  ideal -> 아이디얼/이데알
+
+[analysis] 감지도메인=quantum_mechanics, 다의어수=2
+  norm -> 규범
+  support -> 지원/지지
+
+[topology] 감지도메인=topology, 다의어수=3
+  fiber -> 올/섬유
+  regular -> 정규(正規)
+  manifold -> 다양체(多樣體)
+

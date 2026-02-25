@@ -1,0 +1,1026 @@
+[
+  {
+    "term": "field",
+    "domains": {
+      "algebra": "체(體)",
+      "physics": "장(場)",
+      "general": "분야"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "사칙연산이 정의된 집합 (예: 실수체, 복소수체)",
+      "physics": "공간의 각 지점에 물리량이 정의된 상태 (예: 중력장, 전자기장)"
+    },
+    "wrong_translations": [
+      "들판",
+      "경기장"
+    ]
+  },
+  {
+    "term": "ring",
+    "domains": {
+      "algebra": "환(環)",
+      "geometry": "고리",
+      "general": "반지"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "덧셈과 곱셈이 정의된 대수적 구조",
+      "geometry": "고리 모양의 기하학적 형상"
+    },
+    "wrong_translations": [
+      "종소리",
+      "전화벨"
+    ]
+  },
+  {
+    "term": "kernel",
+    "domains": {
+      "algebra": "핵(核)",
+      "computer": "커널",
+      "general": "알맹이"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "함수값이 항등원이 되게 하는 원소들의 집합",
+      "computer": "운영체제의 핵심부"
+    },
+    "wrong_translations": [
+      "커널",
+      "중심"
+    ]
+  },
+  {
+    "term": "top",
+    "domains": {
+      "topology": "상단/위",
+      "mechanics": "팽이",
+      "general": "최고"
+    },
+    "ambiguous": true,
+    "definition": {
+      "topology": "위상 공간의 가장 윗부분 또는 기저 원소",
+      "mechanics": "회전 운동을 하는 고체 장난감 또는 강체"
+    },
+    "wrong_translations": [
+      "꼭대기",
+      "상의"
+    ]
+  },
+  {
+    "term": "fiber",
+    "domains": {
+      "geometry": "올/섬유",
+      "biology": "섬유질"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "파이버 번들(fiber bundle) 구조에서의 국소적 공간",
+      "biology": "생체 조직의 가느다란 가닥"
+    },
+    "wrong_translations": [
+      "섬유",
+      "속도"
+    ]
+  },
+  {
+    "term": "norm",
+    "domains": {
+      "analysis": "노름/노름(norm)",
+      "statistics": "정규화",
+      "general": "규범"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "벡터의 크기를 일반화한 개념",
+      "statistics": "데이터를 표준 범위로 조정하는 것"
+    },
+    "wrong_translations": [
+      "표준",
+      "기준"
+    ]
+  },
+  {
+    "term": "regular",
+    "domains": {
+      "analysis": "정칙(正則)",
+      "topology": "정규(正規)",
+      "general": "규칙적"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "미분 가능하거나 특이점이 없는 성질",
+      "topology": "분리 공리 중 하나를 만족하는 공간"
+    },
+    "wrong_translations": [
+      "보통의",
+      "정기적인"
+    ]
+  },
+  {
+    "term": "support",
+    "domains": {
+      "analysis": "지지집합/지지(support)",
+      "general": "지원/지지"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "함수값이 0이 아닌 점들의 폐쇄 집합",
+      "general": "도움을 주거나 뒷받침함"
+    },
+    "wrong_translations": [
+      "응원",
+      "지지대"
+    ]
+  },
+  {
+    "term": "ideal",
+    "domains": {
+      "algebra": "아이디얼/이데알",
+      "general": "이상적"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "환의 부분집합으로 특정 연산에 대해 닫혀 있는 구조",
+      "general": "가장 완벽한 상태"
+    },
+    "wrong_translations": [
+      "이상형",
+      "생각"
+    ]
+  },
+  {
+    "term": "spectrum",
+    "domains": {
+      "analysis": "스펙트럼",
+      "physics": "분광/스펙트럼"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "선형 연산자의 고윳값들의 집합",
+      "physics": "빛이나 전자기파의 성분 분포"
+    },
+    "wrong_translations": [
+      "무지개",
+      "범위"
+    ]
+  },
+  {
+    "term": "order",
+    "domains": {
+      "algebra": "위수(位數)",
+      "analysis": "순서/차수",
+      "physics": "질서/차수"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "군의 원소 개수 또는 원소의 거듭제곱 주기",
+      "analysis": "집합 원소 간의 비교 관계 또는 미분 횟수"
+    },
+    "wrong_translations": [
+      "주문",
+      "명령"
+    ]
+  },
+  {
+    "term": "degree",
+    "domains": {
+      "algebra": "차수(次數)",
+      "geometry": "도(度)/각도",
+      "general": "정도"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "다항식의 최고차항 지수 또는 그래프 정점의 간선 수",
+      "geometry": "각도를 측정하는 단위"
+    },
+    "wrong_translations": [
+      "학위",
+      "온도"
+    ]
+  },
+  {
+    "term": "power",
+    "domains": {
+      "algebra": "거듭제곱",
+      "physics": "전력/일률/동력",
+      "general": "권력/힘"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "같은 수를 여러 번 곱함",
+      "physics": "단위 시간당 수행하는 일의 양"
+    },
+    "wrong_translations": [
+      "파워",
+      "힘"
+    ]
+  },
+  {
+    "term": "trace",
+    "domains": {
+      "algebra": "대각합/트레이스",
+      "general": "흔적"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "정사각 행렬의 주대각선 성분의 합",
+      "general": "자국이나 남은 흔적"
+    },
+    "wrong_translations": [
+      "추적",
+      "베끼기"
+    ]
+  },
+  {
+    "term": "space",
+    "domains": {
+      "geometry": "공간(空間)",
+      "typography": "여백/빈칸",
+      "general": "우주"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "수학적 원소들이 정의된 집합적 틀",
+      "typography": "문자 사이의 빈 자리"
+    },
+    "wrong_translations": [
+      "공터",
+      "간격"
+    ]
+  },
+  {
+    "term": "map",
+    "domains": {
+      "geometry": "사상(寫像)",
+      "geography": "지도",
+      "general": "사상(寫像)",
+      "algebra": "사상(寫像)",
+      "analysis": "사상(寫像)",
+      "topology": "사상(寫像)"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "두 집합 사이의 대응 관계 (함수)",
+      "geography": "지표면을 평면에 나타낸 그림",
+      "algebra": "두 집합 사이의 대응 관계, 함수(function)와 동의어로 사용"
+    },
+    "wrong_translations": [
+      "지도",
+      "약도"
+    ]
+  },
+  {
+    "term": "module",
+    "domains": {
+      "algebra": "가군(加群)",
+      "engineering": "모듈",
+      "general": "구성 단위"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "벡터 공간을 일반화하여 환 위의 원소로 연산하는 구조",
+      "engineering": "독립된 기능을 수행하는 부품 단위"
+    },
+    "wrong_translations": [
+      "모듈",
+      "교과목"
+    ]
+  },
+  {
+    "term": "body",
+    "domains": {
+      "algebra": "체(體)",
+      "physics": "물체/강체",
+      "general": "신체"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "나눗셈이 가능한 가환환 (Field의 고어적 표현 또는 독일어 Körper 대응)",
+      "physics": "질량을 가진 물리적 대상"
+    },
+    "wrong_translations": [
+      "몸통",
+      "본문"
+    ]
+  },
+  {
+    "term": "prime",
+    "domains": {
+      "algebra": "소수(素數)/소(素)",
+      "general": "주요한/으뜸"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "1과 자신만으로 나누어떨어지는 수 또는 소 아이디얼",
+      "general": "품질이나 중요도가 가장 높은 상태"
+    },
+    "wrong_translations": [
+      "전성기",
+      "프라임"
+    ]
+  },
+  {
+    "term": "simple",
+    "domains": {
+      "algebra": "단순(單純)",
+      "general": "간단한"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "정규 부분군이 자기 자신과 항등군뿐인 군",
+      "general": "복잡하지 않은"
+    },
+    "wrong_translations": [
+      "단순한",
+      "소박한"
+    ]
+  },
+  {
+    "term": "group",
+    "domains": {
+      "algebra": "군(群)",
+      "general": "집단/그룹"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "결합법칙, 항등원, 역원을 만족하는 이항연산 집합",
+      "general": "함께 모여 있는 사람들"
+    },
+    "wrong_translations": [
+      "단체",
+      "무리"
+    ]
+  },
+  {
+    "term": "category",
+    "domains": {
+      "category_theory": "범주(範疇)",
+      "philosophy": "범주",
+      "general": "범주/카테고리"
+    },
+    "ambiguous": true,
+    "definition": {
+      "category_theory": "수학적 대상들과 그들 사이의 사상으로 구성된 구조",
+      "philosophy": "인간 사고의 근본 개념"
+    },
+    "wrong_translations": [
+      "부류",
+      "종류"
+    ]
+  },
+  {
+    "term": "base",
+    "domains": {
+      "topology": "기저(基底)",
+      "geometry": "밑변/밑면",
+      "chemistry": "염기"
+    },
+    "ambiguous": true,
+    "definition": {
+      "topology": "위상 공간의 모든 열린 집합을 생성할 수 있는 부분집합",
+      "geometry": "도형에서 아래쪽에 위치한 면이나 선"
+    },
+    "wrong_translations": [
+      "기지",
+      "베이스"
+    ]
+  },
+  {
+    "term": "basis",
+    "domains": {
+      "algebra": "기저(基底)",
+      "statistics": "근거/기준",
+      "general": "기초"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "벡터 공간을 생성하는 선형 독립인 벡터들의 집합",
+      "statistics": "계산이나 판단의 기준이 되는 값"
+    },
+    "wrong_translations": [
+      "기초",
+      "바탕"
+    ]
+  },
+  {
+    "term": "manifold",
+    "domains": {
+      "geometry": "다양체(多樣體)",
+      "engineering": "매니폴드/다관",
+      "general": "다양한"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "국소적으로 유클리드 공간과 닮은 위상 공간",
+      "engineering": "여러 유체를 모으거나 분배하는 파이프 시스템"
+    },
+    "wrong_translations": [
+      "여러 가지의",
+      "매니폴드"
+    ]
+  },
+  {
+    "term": "chart",
+    "domains": {
+      "geometry": "좌표지도/차트",
+      "statistics": "도표/그래프"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "다양체와 유클리드 공간 사이의 국소적 동상 사상",
+      "statistics": "데이터를 시각적으로 나타낸 표"
+    },
+    "wrong_translations": [
+      "차트",
+      "순위표"
+    ]
+  },
+  {
+    "term": "atlas",
+    "domains": {
+      "geometry": "좌표지도첩/아틀라스",
+      "geography": "지도책"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "다양체 전체를 덮는 좌표지도들의 집합",
+      "geography": "지도를 모아 엮은 책"
+    },
+    "wrong_translations": [
+      "아틀라스",
+      "지형도"
+    ]
+  },
+  {
+    "term": "derivative",
+    "domains": {
+      "analysis": "도함수(導函數)/미분",
+      "finance": "파생상품"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "함수의 변화율을 나타내는 함수",
+      "finance": "기초 자산 가치에 따라 결정되는 금융 상품"
+    },
+    "wrong_translations": [
+      "파생어",
+      "유도"
+    ]
+  },
+  {
+    "term": "integral",
+    "domains": {
+      "analysis": "적분(積分)",
+      "general": "필수적인/완전한"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "함수 그래프 아래의 면적이나 축적량을 구하는 연산",
+      "general": "전체를 구성하는 데 없어서는 안 될"
+    },
+    "wrong_translations": [
+      "통합된",
+      "완성된"
+    ]
+  },
+  {
+    "term": "limit",
+    "domains": {
+      "analysis": "극한(極限)",
+      "general": "한계/제한"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "수열이나 함수가 한없이 가까워지는 값",
+      "general": "더 이상 넘을 수 없는 선"
+    },
+    "wrong_translations": [
+      "제한",
+      "끝"
+    ]
+  },
+  {
+    "term": "sequence",
+    "domains": {
+      "analysis": "수열(數列)",
+      "biology": "서열",
+      "general": "순서"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "자연수를 정의역으로 하는 함수의 값들을 나열한 것",
+      "biology": "DNA나 단백질 구성 성분의 순서"
+    },
+    "wrong_translations": [
+      "장면",
+      "연속"
+    ]
+  },
+  {
+    "term": "series",
+    "domains": {
+      "analysis": "급수(級數)",
+      "general": "시리즈/연속물"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "수열의 모든 항을 더한 것",
+      "general": "차례로 일어나는 일련의 사건"
+    },
+    "wrong_translations": [
+      "연속",
+      "시리즈"
+    ]
+  },
+  {
+    "term": "convergence",
+    "domains": {
+      "analysis": "수렴(收斂)",
+      "general": "융합"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "수열이나 함수가 특정 값에 한없이 가까워지는 성질",
+      "general": "여러 의견이나 기술이 하나로 모임"
+    },
+    "wrong_translations": [
+      "집중",
+      "모임"
+    ]
+  },
+  {
+    "term": "divergence",
+    "domains": {
+      "analysis": "발산(發散)",
+      "physics": "발산/다이버전스",
+      "general": "차이"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "수열이나 함수가 수렴하지 않는 성질",
+      "physics": "벡터장이 한 점에서 퍼져 나오는 정도"
+    },
+    "wrong_translations": [
+      "일탈",
+      "갈림"
+    ]
+  },
+  {
+    "term": "gradient",
+    "domains": {
+      "analysis": "경사도/기울기/그레이디언트",
+      "design": "그라데이션"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "다변수 함수의 각 성분별 변화율을 벡터로 나타낸 것",
+      "design": "색상이 점진적으로 변하는 효과"
+    },
+    "wrong_translations": [
+      "경사",
+      "언덕"
+    ]
+  },
+  {
+    "term": "curl",
+    "domains": {
+      "physics": "회전/컬(curl)",
+      "general": "곱슬머리"
+    },
+    "ambiguous": true,
+    "definition": {
+      "physics": "벡터장이 한 점 주변에서 회전하는 정도를 나타내는 벡터",
+      "general": "돌돌 말린 모양"
+    },
+    "wrong_translations": [
+      "곡선",
+      "말기"
+    ]
+  },
+  {
+    "term": "flux",
+    "domains": {
+      "physics": "선속(線束)/플럭스",
+      "metallurgy": "용제(溶劑)"
+    },
+    "ambiguous": true,
+    "definition": {
+      "physics": "단위 면적을 통과하는 물리량의 흐름",
+      "metallurgy": "금속을 녹일 때 불순물을 제거하기 위해 넣는 물질"
+    },
+    "wrong_translations": [
+      "흐름",
+      "변화"
+    ]
+  },
+  {
+    "term": "mass",
+    "domains": {
+      "physics": "질량(質量)",
+      "religion": "미사",
+      "general": "덩어리"
+    },
+    "ambiguous": true,
+    "definition": {
+      "physics": "물체가 가진 고유한 양",
+      "religion": "가톨릭의 예배 의식"
+    },
+    "wrong_translations": [
+      "대중",
+      "무게"
+    ]
+  },
+  {
+    "term": "force",
+    "domains": {
+      "physics": "힘(力)",
+      "law": "강제력/효력",
+      "general": "병력"
+    },
+    "ambiguous": true,
+    "definition": {
+      "physics": "물체의 운동 상태나 모양을 변화시키는 원인",
+      "law": "법적 구속력"
+    },
+    "wrong_translations": [
+      "폭력",
+      "압력"
+    ]
+  },
+  {
+    "term": "work",
+    "domains": {
+      "physics": "일",
+      "general": "작업/작품/노동"
+    },
+    "ambiguous": true,
+    "definition": {
+      "physics": "힘을 가해 물체를 이동시켰을 때의 에너지 전달량",
+      "general": "어떤 목적을 위해 하는 활동"
+    },
+    "wrong_translations": [
+      "직장",
+      "숙제"
+    ]
+  },
+  {
+    "term": "energy",
+    "domains": {
+      "physics": "에너지",
+      "general": "활력"
+    },
+    "ambiguous": true,
+    "definition": {
+      "physics": "일을 할 수 있는 능력",
+      "general": "사람의 기운이나 활동력"
+    },
+    "wrong_translations": [
+      "기운",
+      "정력"
+    ]
+  },
+  {
+    "term": "state",
+    "domains": {
+      "physics": "상태(狀態)",
+      "politics": "국가/주(州)"
+    },
+    "ambiguous": true,
+    "definition": {
+      "physics": "물리계의 특정 시점에서의 조건 (예: 양자 상태)",
+      "politics": "통치 조직을 가진 공동체"
+    },
+    "wrong_translations": [
+      "발표하다",
+      "진술"
+    ]
+  },
+  {
+    "term": "phase",
+    "domains": {
+      "physics": "위상(位相)/상(相)",
+      "general": "단계"
+    },
+    "ambiguous": true,
+    "definition": {
+      "physics": "주기적 운동의 진행 위치 또는 물질의 균일한 상태 (예: 기체상)",
+      "general": "발달이나 변화의 한 과정"
+    },
+    "wrong_translations": [
+      "시기",
+      "모습"
+    ]
+  },
+  {
+    "term": "dimension",
+    "domains": {
+      "geometry": "차원(次元)",
+      "general": "크기/치수"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "공간이나 대상을 구성하는 독립적인 방향의 수",
+      "general": "물체의 가로, 세로, 높이 등의 길이"
+    },
+    "wrong_translations": [
+      "규모",
+      "측면"
+    ]
+  },
+  {
+    "term": "point",
+    "domains": {
+      "geometry": "점(點)",
+      "general": "요점/의미"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "크기가 없고 위치만 있는 기하학적 요소",
+      "general": "말하고자 하는 핵심 내용"
+    },
+    "wrong_translations": [
+      "뾰족한 곳",
+      "점수"
+    ]
+  },
+  {
+    "term": "line",
+    "domains": {
+      "geometry": "선(線)/직선",
+      "general": "줄/대사"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "폭이 없고 길이만 있는 연속적인 점들의 집합",
+      "general": "물건을 늘어놓은 줄"
+    },
+    "wrong_translations": [
+      "전화선",
+      "계선"
+    ]
+  },
+  {
+    "term": "surface",
+    "domains": {
+      "geometry": "곡면(曲面)",
+      "general": "표면/겉면"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "두 개의 차원을 가진 기하학적 대상",
+      "general": "물체의 가장 바깥쪽 부분"
+    },
+    "wrong_translations": [
+      "수면",
+      "바닥"
+    ]
+  },
+  {
+    "term": "volume",
+    "domains": {
+      "geometry": "부피/체적",
+      "physics": "음량",
+      "general": "용량/권(卷)"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "입체가 점유하는 공간의 크기",
+      "physics": "소리의 크기"
+    },
+    "wrong_translations": [
+      "대량",
+      "책"
+    ]
+  },
+  {
+    "term": "angle",
+    "domains": {
+      "geometry": "각(角)/각도",
+      "general": "관점/각도"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "한 점에서 나가는 두 반직선 사이의 벌어진 정도",
+      "general": "사물을 바라보는 방향"
+    },
+    "wrong_translations": [
+      "모서리",
+      "낚시"
+    ]
+  },
+  {
+    "term": "arc",
+    "domains": {
+      "geometry": "호(弧)",
+      "physics": "아크/전호",
+      "general": "원호"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "원주의 일부분",
+      "physics": "기체 방전 시 발생하는 밝은 빛의 곡선"
+    },
+    "wrong_translations": [
+      "방주",
+      "활"
+    ]
+  },
+  {
+    "term": "chord",
+    "domains": {
+      "geometry": "현(弦)",
+      "music": "화음",
+      "engineering": "날개폭"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "원 위나 곡선 위의 두 점을 이은 선분",
+      "music": "둘 이상의 음이 함께 울리는 상태"
+    },
+    "wrong_translations": [
+      "끈",
+      "코드"
+    ]
+  },
+  {
+    "term": "root",
+    "domains": {
+      "algebra": "근(根)/해",
+      "general": "뿌리/근원"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "방정식을 만족시키는 미지수의 값",
+      "general": "식물의 지하부 또는 사물의 본질"
+    },
+    "wrong_translations": [
+      "뿌리",
+      "하단"
+    ]
+  },
+  {
+    "term": "factor",
+    "domains": {
+      "algebra": "인수(因數)/약수",
+      "general": "요인/요소"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "어떤 수나 식을 곱으로 나타냈을 때의 각 구성원",
+      "general": "사건의 발생에 영향을 주는 원인"
+    },
+    "wrong_translations": [
+      "공장",
+      "대리인"
+    ]
+  },
+  {
+    "term": "product",
+    "domains": {
+      "algebra": "곱/적(積)",
+      "general": "제품/생산물"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "곱셈 연산의 결과",
+      "general": "노동의 결과로 만들어진 물건"
+    },
+    "wrong_translations": [
+      "상품",
+      "결과물"
+    ]
+  },
+  {
+    "term": "sum",
+    "domains": {
+      "algebra": "합(合)",
+      "general": "총합/금액"
+    },
+    "ambiguous": true,
+    "definition": {
+      "algebra": "덧셈 연산의 결과",
+      "general": "모두 합친 분량"
+    },
+    "wrong_translations": [
+      "액수",
+      "요약"
+    ]
+  },
+  {
+    "term": "mean",
+    "domains": {
+      "statistics": "평균(平均)",
+      "general": "의미하다/비열한"
+    },
+    "ambiguous": true,
+    "definition": {
+      "statistics": "자료의 값을 모두 더해 개수로 나눈 값",
+      "general": "어떤 뜻을 나타내다"
+    },
+    "wrong_translations": [
+      "수단",
+      "의미"
+    ]
+  },
+  {
+    "term": "mode",
+    "domains": {
+      "statistics": "최빈값(最頻値)",
+      "physics": "모드/모드(mode)",
+      "general": "방식"
+    },
+    "ambiguous": true,
+    "definition": {
+      "statistics": "자료에서 가장 자주 나타나는 값",
+      "physics": "진동이나 파동의 특정 형태"
+    },
+    "wrong_translations": [
+      "유행",
+      "모드"
+    ]
+  },
+  {
+    "term": "range",
+    "domains": {
+      "statistics": "범위(範圍)",
+      "analysis": "치역(値域)",
+      "general": "산맥"
+    },
+    "ambiguous": true,
+    "definition": {
+      "statistics": "자료의 최댓값과 최솟값의 차이",
+      "analysis": "함수가 실제로 취하는 함숫값들의 집합"
+    },
+    "wrong_translations": [
+      "사격장",
+      "다양함"
+    ]
+  },
+  {
+    "term": "domain",
+    "domains": {
+      "analysis": "정의역(定義域)/영역",
+      "general": "영토/분야"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "함수가 정의된 입력값들의 집합",
+      "general": "소유하거나 지배하는 땅"
+    },
+    "wrong_translations": [
+      "주소",
+      "지배"
+    ]
+  },
+  {
+    "term": "image",
+    "domains": {
+      "analysis": "치역(値域)/상(像)",
+      "general": "이미지/그림"
+    },
+    "ambiguous": true,
+    "definition": {
+      "analysis": "정의역의 원소가 함수에 의해 대응된 값",
+      "general": "눈에 보이는 형상"
+    },
+    "wrong_translations": [
+      "사진",
+      "인상"
+    ]
+  },
+  {
+    "term": "tangent",
+    "domains": {
+      "geometry": "접선(接線)",
+      "trigonometry": "탄젠트",
+      "general": "벗어난"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "곡선과 한 점에서 만나는 직선",
+      "trigonometry": "직각삼각형의 높이를 밑변으로 나눈 비율"
+    },
+    "wrong_translations": [
+      "접하는",
+      "탈선"
+    ]
+  },
+  {
+    "term": "normal",
+    "domains": {
+      "geometry": "법선(法線)",
+      "statistics": "정규(正規)",
+      "general": "보통의"
+    },
+    "ambiguous": true,
+    "definition": {
+      "geometry": "접선이나 평면에 수직인 선",
+      "statistics": "가우시안 분포를 따르는 상태"
+    },
+    "wrong_translations": [
+      "정상적인",
+      "평범한"
+    ]
+  }
+]
