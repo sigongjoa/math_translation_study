@@ -68,6 +68,13 @@ class Stage1_Orientation(BaseStage):
             details={"section_count": len(sections_text)},
         )
 
+        # Layout parser — used when sections arrive without block metadata
+        try:
+            from src.pcm.core.layout_parser import LayoutAwareParser
+            layout_parser = LayoutAwareParser()
+        except Exception:
+            layout_parser = None
+
         for sec in sections_text:
             sec_id = sec["section_id"]
             text = sec.get("text", "")
@@ -80,6 +87,23 @@ class Stage1_Orientation(BaseStage):
                 original_en=text,
             )
             db.update_section(db_sec_id, status="running")
+
+            # Attach block metadata when only raw text is available
+            if "block_type" not in sec and layout_parser is not None:
+                try:
+                    parsed_blocks = layout_parser.parse_text(text, page=0)
+                    sec["block_type"] = parsed_blocks[0].block_type if parsed_blocks else "body"
+                    sec["blocks_metadata"] = layout_parser.to_json(parsed_blocks)
+                except Exception:
+                    sec.setdefault("block_type", "body")
+                    sec.setdefault("blocks_metadata", {})
+            # Compute abstraction_score from LaTeX density + math term frequency
+            if "abstraction_score" not in sec:
+                try:
+                    from src.pcm.core.semantic_chunker import SemanticChunker
+                    sec["abstraction_score"] = SemanticChunker()._compute_abstraction_score(text)
+                except Exception:
+                    sec["abstraction_score"] = 0.0
 
             try:
                 domain = classifier.classify(text)
@@ -104,6 +128,9 @@ class Stage1_Orientation(BaseStage):
                     "domain": domain,
                     "terminology_guide": terminology_guide,
                     "db_section_id": db_sec_id,
+                    "block_type": sec.get("block_type", "body"),
+                    "blocks_metadata": sec.get("blocks_metadata", {}),
+                    "abstraction_score": sec.get("abstraction_score", 0.0),
                 })
 
             except Exception as exc:
@@ -120,6 +147,9 @@ class Stage1_Orientation(BaseStage):
                     "domain": "general",
                     "terminology_guide": "",
                     "db_section_id": db_sec_id,
+                    "block_type": sec.get("block_type", "body"),
+                    "blocks_metadata": sec.get("blocks_metadata", {}),
+                    "abstraction_score": sec.get("abstraction_score", 0.0),
                 })
 
         stats = km.get_stats()
@@ -300,10 +330,22 @@ class Stage3_Refinement(BaseStage):
             try:
                 glossary = km.get_all_for_domain(domain)
 
+                # Gather few-shot feedback examples for this section
+                feedback_context = ""
+                try:
+                    from src.pcm.core.feedback_loop import FeedbackInjector, FeedbackDB
+                    _injector = FeedbackInjector(FeedbackDB())
+                    feedback_context = _injector.inject_to_translator_prompt(
+                        sec_id, top_k=3
+                    )
+                except Exception:
+                    feedback_context = ""
+
                 initial_prompt = (
                     "당신은 수학/물리 전문 번역가입니다. "
-                    "수식($...$)은 절대 변형하지 마세요.\n\n"
-                    f"{terminology_guide}"
+                    "수식($...$)은 절대 변형하지 마세요. 학술 문체를 사용하세요.\n\n"
+                    f"{terminology_guide}\n\n"
+                    f"{feedback_context}"
                 )
 
                 final_ko, trace = tcr.run(
@@ -523,6 +565,13 @@ class Stage5_Evolution(BaseStage):
         feedback_db = FeedbackDB()
         injector = FeedbackInjector(db=feedback_db)
 
+        # MotivationAgent — loaded once, used per-section
+        try:
+            from src.pcm.core.motivation_agent import MotivationAgent
+            motivation_agent = MotivationAgent()
+        except Exception:
+            motivation_agent = None
+
         output_sections = []
         scores = []
         processed = []
@@ -550,6 +599,35 @@ class Stage5_Evolution(BaseStage):
                     section_id=sec_id, top_k=5
                 )
 
+                # MotivationAgent: inject motivation block for high-abstraction sections
+                motivation_injected = False
+                if motivation_agent is not None:
+                    block_type = sec.get("block_type", "body")
+                    abstraction_score = sec.get("abstraction_score", 0.0)
+                    if motivation_agent.should_generate(block_type, abstraction_score):
+                        try:
+                            motivation = motivation_agent.generate(
+                                unit_text=text,
+                                domain=domain,
+                                section_title=sec_id,
+                            )
+                            if motivation:
+                                final_ko = motivation_agent.inject_into_translation(
+                                    final_ko, motivation
+                                )
+                                motivation_injected = True
+                                sec_logger.info(
+                                    f"Section {sec_id}: motivation block injected "
+                                    f"(block_type={block_type}, "
+                                    f"abstraction={abstraction_score:.2f})",
+                                    details={
+                                        "block_type": block_type,
+                                        "abstraction_score": abstraction_score,
+                                    },
+                                )
+                        except Exception:
+                            pass
+
                 if final_score:
                     scores.append(final_score)
 
@@ -560,6 +638,9 @@ class Stage5_Evolution(BaseStage):
                     "domain": domain,
                     "final_score": final_score,
                     "few_shot_context_used": bool(few_shot_ctx.strip()),
+                    "motivation_injected": motivation_injected,
+                    "block_type": sec.get("block_type", "body"),
+                    "abstraction_score": sec.get("abstraction_score", 0.0),
                 })
 
                 db.update_section(db_sec_id, status="completed")
@@ -580,6 +661,7 @@ class Stage5_Evolution(BaseStage):
                     "domain": domain,
                     "final_score": 0.0,
                     "few_shot_context_used": False,
+                    "motivation_injected": False,
                 })
                 processed.append({**sec, "db_section_id": db_sec_id})
 
