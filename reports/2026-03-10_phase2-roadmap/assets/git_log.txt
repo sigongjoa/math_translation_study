@@ -1,0 +1,20 @@
+617b0e2 test: add pipeline validation suite + fix model to qwen2.5:7b
+b94d466 feat: implement MasterPipeline with SQLite state management (#18)
+7fb7e5f feat: implement Global Terminology Bank (#10) and Feedback Loop (#13)
+7c32820 feat: add WSD before/after translation benchmark results
+61814dc feat: integrate WSD Agent into translation pipeline + enrich dictionary
+ reports/2026-03-10_issue_implementation/REPORT.md |  255 +++
+ run_pipeline.py                                   |  227 +++
+ src/pcm/core/critic_agent.py                      |   85 +
+ src/pcm/core/feedback_loop.py                     |  299 ++++
+ src/pcm/core/knowledge_manager.py                 |  239 +++
+ src/pcm/core/tcr_loop.py                          |   78 +
+ src/pcm/data/term_bank.json                       | 1817 +++++++++++++++++++++
+ src/pcm/feedback_cli.py                           |  236 +++
+ src/pcm/pipeline/__init__.py                      |   14 +
+ src/pcm/pipeline/db.py                            |  415 +++++
+ src/pcm/pipeline/logger.py                        |   74 +
+ src/pcm/pipeline/master.py                        |  298 ++++
+ src/pcm/pipeline/stages.py                        |  623 +++++++
+ tests/test_pipeline_validation.py                 |  307 ++++
+ 14 files changed, 4967 insertions(+)
