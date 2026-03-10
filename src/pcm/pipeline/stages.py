@@ -152,7 +152,7 @@ class Stage2_Drafting(BaseStage):
     stage_name = "Initial Draft"
 
     OLLAMA_URL = "http://localhost:11434/api/generate"
-    MODEL = "gemma2:9b"
+    MODEL = "qwen2.5:7b"
     SYSTEM_PROMPT = (
         "당신은 수학/물리 전문 번역가입니다. "
         "수식($...$)은 절대 변형하지 마세요. "
@@ -272,7 +272,7 @@ class Stage3_Refinement(BaseStage):
 
         km = KnowledgeManager()
         tcr = TCRLoop(
-            model="gemma2:9b",
+            model="qwen2.5:7b",
             threshold=self.THRESHOLD,
             max_iterations=self.MAX_ITERATIONS,
         )
