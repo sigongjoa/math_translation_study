@@ -10,37 +10,65 @@ import re
 from typing import Dict, List, Optional, Any
 from pathlib import Path
 
+from src.pcm.core.llm_client import _DEFAULT_MODEL, _DEFAULT_BASE_URL
+
+
 class DomainClassifier:
     """Classifies a given text into one of the predefined mathematical domains."""
-    
+
     DOMAINS = [
-        "classical_mechanics", 
-        "quantum_mechanics", 
-        "algebra", 
-        "topology", 
-        "differential_geometry", 
-        "category_theory", 
-        "analysis", 
-        "number_theory", 
-        "combinatorics", 
-        "geometry"
+        "classical_mechanics",
+        "quantum_mechanics",
+        "algebra",
+        "topology",
+        "differential_geometry",
+        "category_theory",
+        "analysis",
+        "number_theory",
+        "combinatorics",
+        "geometry",
+        # CS / AI / ML domains (added for #22)
+        "machine_learning",
+        "computer_science",
+        "nlp",
     ]
 
     # Keyword mapping for fallback classification
     DOMAIN_KEYWORDS = {
         "classical_mechanics": ["force", "mass", "acceleration", "momentum", "lagrangian", "hamiltonian", "newton", "velocity"],
         "quantum_mechanics": ["schrodinger", "wavefunction", "observable", "hilbert space", "operator", "spin", "particle", "quantum"],
-        "algebra": ["group", "ring", "field", "module", "ideal", "isomorphism", "homomorphism", "linear", "vector"],
+        "algebra": ["group", "ring", "field", "module", "ideal", "isomorphism", "homomorphism"],
         "topology": ["open set", "closed set", "compact", "connected", "homeomorphism", "manifold", "continuity", "metric space"],
         "differential_geometry": ["curvature", "metric tensor", "connection", "bundle", "differential form", "riemannian", "geodesic"],
         "category_theory": ["category", "functor", "natural transformation", "morphism", "adjoint", "limit", "colimit"],
-        "analysis": ["derivative", "integral", "measure", "convergence", "limit", "sequence", "series", "function", "complex"],
+        "analysis": ["derivative", "integral", "measure", "convergence", "sequence", "series", "complex analysis"],
         "number_theory": ["prime", "integer", "divisibility", "congruence", "zeta function", "modular", "arithmetic"],
-        "combinatorics": ["graph", "permutation", "combination", "counting", "enumeration", "partition", "algorithm"],
-        "geometry": ["point", "line", "plane", "angle", "surface", "volume", "triangle", "polygon", "euclidean"]
+        "combinatorics": ["permutation", "combination", "counting", "enumeration", "partition"],
+        "geometry": ["point", "line", "plane", "angle", "surface", "volume", "triangle", "polygon", "euclidean"],
+        # CS / AI / ML keywords
+        "machine_learning": [
+            "neural network", "deep learning", "training", "gradient", "loss function",
+            "transformer", "attention mechanism", "fine-tuning", "llm", "large language model",
+            "reinforcement learning", "supervised", "unsupervised", "dataset", "benchmark",
+            "inference", "embedding", "token", "prompt", "agent", "reward",
+        ],
+        "computer_science": [
+            "algorithm", "data structure", "complexity", "graph", "tree", "hash",
+            "software", "system", "compiler", "operating system", "network", "protocol",
+            "api", "database", "query", "pipeline", "architecture", "framework",
+        ],
+        "nlp": [
+            "natural language", "text", "corpus", "vocabulary", "tokenization",
+            "parsing", "syntax", "semantics", "named entity", "sentiment",
+            "machine translation", "summarization", "question answering", "language model",
+        ],
     }
 
-    def __init__(self, model_name: str = "qwen3:14b", ollama_url: str = "http://localhost:11434/api/generate"):
+    def __init__(
+        self,
+        model_name: str = _DEFAULT_MODEL,
+        ollama_url: str = f"{_DEFAULT_BASE_URL}/api/generate",
+    ):
         self.model_name = model_name
         self.ollama_url = ollama_url
 
@@ -52,11 +80,14 @@ class DomainClassifier:
         if not section_text.strip():
             return "general"
 
-        prompt = f"""Identify the primary mathematical or physical domain of the following text.
+        prompt = f"""Identify the primary technical domain of the following text.
 Choose ONLY ONE from this list: {', '.join(self.DOMAINS)}, or "general".
 
 Rules:
-- Output ONLY the domain name.
+- Output ONLY the domain name, nothing else.
+- If the text is about AI, agents, LLMs, or deep learning → output "machine_learning".
+- If the text is about NLP, text processing, language models → output "nlp".
+- If the text is about algorithms, software, systems → output "computer_science".
 - If unsure, output "general".
 
 Text:
@@ -94,16 +125,24 @@ Domain:"""
             # Fallback to keyword matching
             return self._fallback_classify(section_text)
 
+    # CS/AI/ML domains get a multiplier to beat generic single-word math matches
+    _DOMAIN_WEIGHT = {
+        "machine_learning": 3,
+        "computer_science": 3,
+        "nlp": 3,
+    }
+
     def _fallback_classify(self, text: str) -> str:
         """Simple keyword-based classification fallback."""
         text_lower = text.lower()
-        counts = {domain: 0 for domain in self.DOMAINS}
-        
+        counts = {domain: 0.0 for domain in self.DOMAINS}
+
         for domain, keywords in self.DOMAIN_KEYWORDS.items():
+            weight = self._DOMAIN_WEIGHT.get(domain, 1)
             for kw in keywords:
                 if kw in text_lower:
-                    counts[domain] += 1
-        
+                    counts[domain] += weight
+
         best_domain = max(counts, key=counts.get)
         if counts[best_domain] > 0:
             return best_domain
