@@ -1,0 +1,445 @@
+\documentclass[11pt, a4paper, twoside, openany]{book}
+
+% ═══════════════════════════════════════════════════════════
+%  Seven Sketches in Compositionality — 한국어 번역 디자인 시스템
+%  Design Sample: Chapter 1.1 (Generative Effects)
+% ═══════════════════════════════════════════════════════════
+
+% ─── 여백 ───
+\usepackage[
+  top=27mm,
+  bottom=22mm,
+  inner=28mm,
+  outer=24mm,
+  bindingoffset=4mm,
+  headheight=14pt,
+  headsep=12pt
+]{geometry}
+
+% ─── 한글 ───
+\usepackage[hangul]{kotex}
+\usepackage{fontspec}
+
+% ─── 폰트 (띄어쓰기 최적화) ───
+\setmainfont{Noto Serif CJK KR}[
+  UprightFont={Noto Serif CJK KR},
+  BoldFont={Noto Serif CJK KR Bold},
+  Ligatures=TeX,
+  WordSpace=1.2, % 단어 간격 확보
+  PunctuationSpace=WordSpace
+]
+\setsansfont{Noto Sans CJK KR}[
+  UprightFont={Noto Sans CJK KR},
+  BoldFont={Noto Sans CJK KR Bold},
+  Ligatures=TeX,
+]
+\setmonofont{Noto Sans Mono CJK KR}[Scale=0.85]
+
+% ─── 수식 ───
+\usepackage{amsmath, amssymb, amsthm}
+
+% ─── 그래픽 ───
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes, calc, decorations.pathreplacing, backgrounds}
+
+% ─── 색상 팔레트 (원서 톤 반영: 앰버+블루) ───
+\usepackage{xcolor}
+\definecolor{ctamber}{HTML}{B8860B}      % 원서 참조 링크 색
+\definecolor{ctblue}{HTML}{2C5F8A}       % 챕터/섹션 강조
+\definecolor{ctdark}{HTML}{1A1A2E}       % 본문 제목
+\definecolor{ctlight}{HTML}{F8F4EC}      % 정의 박스 배경
+\definecolor{ctexer}{HTML}{E8F5E9}       % 연습문제 배경
+\definecolor{ctexample}{HTML}{FFF8E1}    % 예제 배경
+\definecolor{ctnote}{HTML}{F3E5F5}       % 역주 배경
+\definecolor{ctgray}{HTML}{607D8B}       % 헤더/캡션
+\definecolor{ctdeep}{HTML}{1B3A5C}       % 딥리서치
+\definecolor{ctred}{HTML}{C62828}        % 경고/강조
+
+% ─── 한글 줄바꿈 최적화 ───
+\XeTeXlinebreaklocale "ko"
+\XeTeXlinebreakskip 0pt plus 3pt
+\emergencystretch 5em
+\tolerance=2000
+\hyphenpenalty=50
+\exhyphenpenalty=50
+\doublehyphendemerits=10000
+\finalhyphendemerits=5000
+\setlength{\hfuzz}{2pt}
+
+% ─── 행간 ───
+\linespread{1.55}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{2pt plus 1pt}
+
+% ─── 박스 디자인 (tcolorbox) ───
+\usepackage[most]{tcolorbox}
+
+% ◆ 정의 (Definition) — 차분한 크림색 배경
+\newtcolorbox{definitionbox}[1][]{
+  enhanced, colback=ctlight, colframe=ctamber!70!black,
+  coltitle=white, fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  attach boxed title to top left={yshift=-2mm, xshift=4mm},
+  boxed title style={colback=ctamber!80, sharp corners, boxrule=0pt},
+  sharp corners, boxrule=0.6pt, breakable,
+  left=10pt, right=10pt, top=10pt, bottom=8pt,
+}
+
+% ◆ 연습문제 (Exercise) — 녹색 계열
+\newtcolorbox{exercisebox}[1][]{
+  enhanced, colback=ctexer, colframe=ctblue!40!green!60,
+  fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  sharp corners, boxrule=0pt, leftrule=4pt, breakable,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+}
+
+% ◆ 예제 (Example) — 따뜻한 노란색
+\newtcolorbox{examplebox}[1][]{
+  enhanced, colback=ctexample, colframe=ctamber!50,
+  fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  sharp corners, boxrule=0pt, leftrule=4pt, breakable,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+}
+
+% ◆ 비고 (Remark) — 차분한 보라색/회색 톤
+\newtcolorbox{remarkbox}[1][]{
+  enhanced, colback=ctnote, colframe=ctgray!50,
+  fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  sharp corners, boxrule=0pt, leftrule=4pt, breakable,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+}
+
+% ◆ 역주 (Translator's Note)
+\newtcolorbox{translatornote}[1][]{
+  enhanced, colback=ctnote!50, colframe=ctgray!40,
+  fonttitle=\sffamily\bfseries\small,
+  title={\raisebox{-0.5pt}{\textsf{*}} 역주},
+  sharp corners, boxrule=0pt, leftrule=3pt, breakable,
+  left=10pt, right=10pt, top=6pt, bottom=6pt,
+  fontupper=\small, #1
+}
+
+% ◆ 심층 해설 (Deep Research)
+\newtcolorbox{deepresearch}[1][]{
+  enhanced, colback=ctdeep!5, colframe=ctdeep!70,
+  coltitle=white, fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  attach boxed title to top left={yshift=-2mm, xshift=4mm},
+  boxed title style={colback=ctdeep!80, sharp corners, boxrule=0pt},
+  sharp corners, boxrule=0.6pt, breakable,
+  left=10pt, right=10pt, top=10pt, bottom=8pt,
+  shadow={1.5pt}{-1.5pt}{0pt}{ctdeep!15}
+}
+
+% ◆ 핵심 개념 (Key Concept)
+\newtcolorbox{keyconcept}[1][]{
+  enhanced, colback=white, colframe=ctdark,
+  coltitle=white, fonttitle=\sffamily\bfseries,
+  title={#1},
+  attach boxed title to top center={yshift=-3mm},
+  boxed title style={colback=ctdark, sharp corners, boxrule=0pt},
+  sharp corners, boxrule=1pt, breakable,
+  left=12pt, right=12pt, top=12pt, bottom=10pt
+}
+
+% ◆ 다이어그램 (Figure) — 깔끔한 프레임
+\newtcolorbox{diagrambox}[1][]{
+  enhanced, colback=white, colframe=ctgray!40,
+  fonttitle=\sffamily\small\color{ctgray}, title={#1},
+  attach boxed title to top center={yshift=-2mm},
+  boxed title style={colback=white, colframe=ctgray!40, boxrule=0.4pt, sharp corners},
+  sharp corners, boxrule=0.4pt, breakable,
+  left=6pt, right=6pt, top=8pt, bottom=6pt
+}
+
+% ◆ 수식 하이라이트
+\newtcolorbox{mathbox}{
+  enhanced, colback=ctlight!70, colframe=ctamber!40,
+  sharp corners, boxrule=0.5pt,
+  left=14pt, right=14pt, top=10pt, bottom=10pt,
+  before skip=10pt, after skip=10pt
+}
+
+% ◆ 핵심 요약 (Summary)
+\newtcolorbox{summarybox}{
+  enhanced, colback=white, colframe=ctdark,
+  fonttitle=\sffamily\bfseries\small,
+  title={\small 핵심 요약},
+  sharp corners, boxrule=0.5pt, breakable,
+  left=10pt, right=10pt, top=6pt, bottom=6pt
+}
+
+% ─── 헤더/푸터 ───
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{{\small\sffamily\color{ctgray} 합성성의 일곱 가지 스케치 \hfill \thepage}}
+\fancyhead[RO]{{\small\sffamily\color{ctgray} \thepage \hfill \rightmark}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\color{ctgray!40}\hrule width\headwidth height\headrulewidth}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\small\color{ctgray}\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% ─── 제목 스타일 ───
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]
+  {\normalfont}
+  {\hfill{\fontsize{72}{72}\selectfont\sffamily\color{ctblue!20}\thechapter}}
+  {-20pt}
+  {\sffamily\bfseries\Huge\color{ctdark}}
+  [\vspace{2pt}{\color{ctgray!40}\titlerule[1pt]}]
+\titlespacing*{\chapter}{0pt}{-30pt}{30pt}
+
+\titleformat{\section}[hang]
+  {\sffamily\bfseries\LARGE\color{ctdeep}}
+  {\thesection}{10pt}{}
+\titlespacing*{\section}{0pt}{24pt}{10pt}
+
+\titleformat{\subsection}[hang]
+  {\sffamily\bfseries\large\color{ctdark}}
+  {\thesubsection}{8pt}{}
+\titlespacing*{\subsection}{0pt}{16pt}{6pt}
+
+% ─── 교차참조 ───
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ctblue,
+  urlcolor=ctamber,
+  citecolor=ctamber,
+  pdfborder={0 0 0},
+  bookmarksnumbered=true,
+  pdftitle={합성성의 일곱 가지 스케치 — 응용 범주론 초대},
+  pdfauthor={Brendan Fong, David I. Spivak — 한국어 번역},
+}
+
+% ─── 목차/열거 ───
+\setcounter{tocdepth}{2}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em, itemsep=2pt}
+\setlist[enumerate]{leftmargin=1.5em, itemsep=2pt}
+
+% ─── lettrine (챕터 첫 글자 장식) ───
+\usepackage{lettrine}
+
+% ═══════════════════════════════════════════════════════════
+\begin{document}
+
+% ─────────────────────────────────────────
+%  표지
+% ─────────────────────────────────────────
+\begin{titlepage}
+\begin{tikzpicture}[remember picture, overlay]
+  % 배경
+  \fill[ctdark] (current page.south west) rectangle (current page.north east);
+
+  % 추상적 범주론 다이어그램 장식
+  \begin{scope}[shift={(10.5, 13)}, scale=1.8]
+    % 대상 (objects)
+    \filldraw[ctblue!40, fill=ctblue!20] (-2, 1) rectangle (-1.2, 1.6);
+    \filldraw[ctamber!40, fill=ctamber!20] (0.5, 1) rectangle (1.3, 1.6);
+    \filldraw[ctblue!30, fill=ctblue!15] (-1.2, -0.3) rectangle (-0.4, 0.3);
+    \filldraw[ctamber!30, fill=ctamber!15] (0.2, -0.3) rectangle (1.0, 0.3);
+    \filldraw[ctred!40, fill=ctred!20] (1.6, -0.3) rectangle (2.2, 0.3);
+    \node[white, font=\small\sffamily] at (1.9, 0) {?};
+
+    % 사상 (morphisms) — 화살표
+    \draw[white!60, line width=0.8pt, -Stealth] (-1.1, 1.3) -- (0.4, 1.3);
+    \draw[white!60, line width=0.8pt, -Stealth] (-1.6, 0.9) -- (-0.8, 0.35);
+    \draw[white!60, line width=0.8pt, -Stealth] (0.9, 0.9) -- (0.6, 0.35);
+    \draw[white!40, line width=0.8pt, -Stealth] (-0.4, 0) -- (0.15, 0);
+    \draw[white!40, line width=0.8pt, ->] (1.05, 0) -- (1.55, 0);
+
+    % 바깥 테두리
+    \draw[white!25, line width=1pt, rounded corners=3pt]
+      (-2.3, -0.6) rectangle (2.5, 1.9);
+    \draw[white!15, line width=0.6pt, rounded corners=2pt]
+      (-2.5, -0.8) rectangle (2.7, 2.1);
+  \end{scope}
+
+  % 제목
+  \node[anchor=west] at (2.5, 18.5) {
+    \begin{minipage}{14cm}
+      {\fontsize{12}{16}\selectfont\sffamily\color{ctamber!80}\bfseries
+        SEVEN SKETCHES IN COMPOSITIONALITY}
+    \end{minipage}
+  };
+  \node[anchor=west] at (2.5, 16) {
+    \begin{minipage}{14cm}
+      {\fontsize{32}{38}\selectfont\sffamily\color{white}\bfseries
+        합성성의 일곱 가지}\\[4pt]
+      {\fontsize{32}{38}\selectfont\sffamily\color{white}\bfseries
+        스케치}\\[10pt]
+      {\fontsize{16}{20}\selectfont\sffamily\color{white!70}
+        응용 범주론 초대}
+    \end{minipage}
+  };
+
+  % 저자
+  \node[anchor=west] at (2.5, 7.5) {
+    \begin{minipage}{14cm}
+      {\Large\sffamily\color{white!85} Brendan Fong \quad David I. Spivak}\\[8pt]
+      {\normalsize\sffamily\color{white!50} Massachusetts Institute of Technology}\\[16pt]
+      {\small\sffamily\color{ctamber!60} 한국어 번역 · AI 보조 번역 시스템}
+    \end{minipage}
+  };
+
+  % 하단
+  \node[anchor=south] at (current page.south) [yshift=15mm] {
+    {\small\sffamily\color{white!30} 개인 학습용 · 비배포 · arXiv:1803.05316}
+  };
+\end{tikzpicture}
+\end{titlepage}
+
+% ─── 목차 ───
+\tableofcontents
+\clearpage
+
+% ═══════════════════════════════════════════════════════════
+%  제1장: 생성적 효과 — 순서와 갈루아 연결
+% ═══════════════════════════════════════════════════════════
+\chapter{생성적 효과: 순서와 갈루아 연결}
+\label{ch:1}
+\vspace{-8pt}{\large\sffamily\color{ctgray} Generative Effects: Orders and Galois Connections}
+\vspace{12pt}
+
+\lettrine[lines=2, loversize=0.15, nindent=0.5em]{\color{ctblue}\textsf{이}}{} 책에서 우리는 과학, 공학, 상업의 세계에서 \textit{합성성(compositionality)}이라고 부를 수 있는 것을 관찰할 수 있는 다양한 상황을 탐구한다. 이러한 경우들은 시스템이나 관계가 결합되어 새로운 시스템이나 관계를 형성할 수 있는 사례들이다. 각각의 경우에서 우리는 순수 수학에서의 활용을 위해 개발된 범주론적 구성물이 그 상황의 합성성을 아름답게 기술함을 발견한다.
+
+이 장은 책의 첫 번째 장으로서 두 가지 역할을 수행해야 한다. 첫째, 합성성의 동기 부여 예시들과 관련된 범주론적 정식화를 제공해야 한다. 둘째, 책의 나머지 부분을 위한 수학적 기초를 제공해야 한다. 독자의 배경 지식에 대한 최소한의 가정에서 출발하므로, 우리는 천천히 시작하여 책 전체에 걸쳐 구축해 나갈 것이다.
+
+\begin{translatornote}
+범주론(Category Theory)은 수학적 구조와 그 관계를 연구하는 분야로, 추상대수학에서 출발했지만 최근에는 컴퓨터 과학, 물리학, 언어학 등 다양한 분야에서 응용되고 있습니다.
+\end{translatornote}
+
+% ─── 1.1 ───
+\section{부분의 합 이상}
+\label{sec:1-1}
+
+우리는 많은 실세계 구조들이 합성적(compositional)이지만, 그것들을 관찰한 결과는 종종 합성적이지 않다는 점을 관찰함으로써 이 첫 번째 장의 동기를 부여한다. 그 이유는 관찰이 본질적으로 ``손실이 있는(lossy)'' 것이기 때문이다: 무언가로부터 정보를 추출하려면 세부 사항을 빠뜨려야 한다. 예를 들어, 실수를 어떤 정밀도로 반올림하여 저장한다. 그러나 세부 사항이 실제로 주어진 시스템 연산에 관련이 있다면, 그 연산의 관찰된 결과는 예상과 다를 것이다.
+
+범주론의 중심 주제는 구조와 구조 보존 사상(structure-preserving maps)의 연구이다. 사상 $f \colon X \to Y$는 대상 $X$를 다른 대상 $Y$와의 지정된 관계를 통해 관찰하는 일종의 행위이다.
+
+\begin{exercisebox}[연습문제 1.1]
+\textit{용어 정리.} 함수 $f \colon \mathbb{R} \to \mathbb{R}$가 다음과 같다고 한다:
+\begin{enumerate}[label=(\alph*)]
+  \item 모든 $x, y \in \mathbb{R}$에 대해 $x \leq y$이면 $f(x) \leq f(y)$일 때, \textit{순서 보존(order-preserving)}이라 한다.
+  \item $|x - y| = |f(x) - f(y)|$일 때, \textit{거리 보존(metric-preserving)}이라 한다.
+  \item $f(x + y) = f(x) + f(y)$일 때, \textit{덧셈 보존(addition-preserving)}이라 한다.
+\end{enumerate}
+위의 세 가지 성질 각각에 대해---그것을 \textit{foo}라 부르자---$f$가 foo-보존인 경우와 foo-보존이 아닌 경우의 예를 각각 찾으시오.
+\end{exercisebox}
+
+범주론에서 우리는 다양한 관찰 하에서 시스템의 어떤 측면이 보존되는지를 통제하고자 한다. 위에서 말했듯이, 시스템의 관찰에 의해 보존되는 구조가 적을수록, 그 연산을 관찰할 때 더 많은 ``놀라움(surprises)''이 발생한다. 이러한 놀라움을 \textit{생성적 효과(generative effects)}라 부를 수 있다.
+
+% ─── 1.1.1 ───
+\subsection{생성적 효과 첫 번째 살펴보기}
+\label{sec:1-1-1}
+
+생성적 효과의 개념을 탐구하기 위해 우리는 일종의 시스템, 일종의 관찰, 그리고 관찰에 의해 보존되지 않는 시스템 수준의 연산이 필요하다. 간단한 예시부터 시작하자.
+
+\begin{keyconcept}[단순 시스템 (A Simple System)]
+세 개의 점을 생각하자; 이들을 $\bullet$, $\circ$, $*$라 부르자. 이 예시에서 \textbf{시스템(system)}은 단순히 이 점들을 연결하는 방법이다. 우리의 점들을 전력망의 지점이라 생각할 수 있고, 시스템은 전력선에 의한 연결을 기술한다. 또는 특정 질병에 취약한 사람들이라 생각할 수 있고, 시스템은 전염으로 이어질 수 있는 상호작용을 기술한다.
+\end{keyconcept}
+
+\begin{center}
+\begin{diagrambox}[삼각형 연결 시스템: $\bullet$과 $\circ$가 연결되어 있지만, $*$와는 연결되지 않음]
+\includegraphics[width=0.5\textwidth]{triangle_systems.png}
+\end{diagrambox}
+\end{center}
+
+연결은 대칭적(symmetric)이다: $a$가 $b$에 연결되면, $b$는 $a$에 연결된다. 연결은 또한 추이적(transitive)이다: $a$가 $b$에 연결되고 $b$가 $c$에 연결되면, $a$는 $c$에 연결된다. 즉, 모든 $a$, $b$, $c$가 연결된다.
+
+여기서 점이 모두 연결되지 않은 경우와 모두 연결된 경우, 두 가지 시스템을 더 묘사한다. 총 다섯 가지 시스템이 있으며, 아래에 그것들을 묘사한다.
+
+\begin{definitionbox}[정의: 시스템의 합류 (Join)]
+두 시스템 $A$와 $B$를 \textbf{합류(joining)}한다는 것은 그 연결을 결합하는 것이다. 즉, $A \vee B$로 표기되는 시스템 $A$와 $B$의 \textit{합류(join)}는 점 $x$와 $y$ 사이에 연결이 있다면, $A$ 또는 $B$ 중 적어도 하나에서 다음이 참인 점 $z_1, \ldots, z_n$이 존재한다: $x$는 $z_1$에 연결되고, $z_i$는 $z_{i+1}$에 연결되며, $z_n$은 $y$에 연결된다.
+
+고수준으로 말하면 이는 ``$A$와 $B$의 연결의 합집합의 추이적 폐포(transitive closure)를 취하라''는 것이다.
+\end{definitionbox}
+
+\begin{center}
+\begin{diagrambox}[시스템의 합류(join) 연산 예시]
+\includegraphics[width=0.85\textwidth]{join_systems.png}
+\end{diagrambox}
+\end{center}
+
+\begin{examplebox}[예제 1.3 — 생성적 효과의 발생]
+앨리스는 이 시스템을 관찰하고 있다. 그녀의 관심 대상인 관찰 $\Phi$는 시스템에서 하나의 특성을 추출한다: 점 $\bullet$이 점 $*$에 연결되어 있는지 여부이다. 그녀의 시스템 관찰은 \texttt{true} 또는 \texttt{false} 중 하나의 값을 할당하는 것이다.
+
+생성적 효과의 가능성은 다음 부등식에 포착된다:
+\begin{equation}
+\Phi(A) \vee \Phi(B) \leq \Phi(A \vee B) \tag{1.8}
+\end{equation}
+이것이 엄격한 부등식이 될 수 있음을 4페이지에서 보았다.
+\end{examplebox}
+
+% ─── 1.1.2 ───
+\subsection{시스템의 순서화}
+\label{sec:1-1-2}
+
+범주론은 구조를 조직하고 계층화하는 것에 관한 것이다. 이 절에서는 시스템의 합류 연산이 더 기본적인 구조인 순서(order)로부터 유도될 수 있음을 설명한다.
+
+시스템 $A$와 $B$가 주어졌을 때, $A$에서 $x$가 $y$에 연결되어 있을 때마다 $B$에서도 $x$가 $y$에 연결되어 있으면, $A \leq B$라 한다.
+
+\begin{center}
+\begin{diagrambox}[하세 다이어그램 (Hasse Diagram) — 3점 시스템의 순서 구조]
+\includegraphics[width=0.65\textwidth]{hasse_diagram.png}
+\end{diagrambox}
+\end{center}
+
+\noindent 여기서 시스템 $A$에서 시스템 $B$로의 화살표는 $A \leq B$를 의미한다. 이러한 다이어그램을 \textbf{하세 다이어그램(Hasse diagram)}이라 한다.
+
+\begin{deepresearch}{순서론과 격자론 (Order Theory \& Lattice Theory)}
+순서론은 수학의 기초 분야 중 하나로, 원소들 사이의 비교 관계를 연구한다. 여기서 등장하는 하세 다이어그램은 유한 반순서집합(finite poset)을 시각화하는 표준 도구이다.
+
+\textbf{격자(lattice)}는 임의의 두 원소가 최소상계(join, $\vee$)와 최대하계(meet, $\wedge$)를 모두 가지는 반순서집합이다. 위의 3점 시스템 예시는 사실 격자 구조를 형성하며, 이는 범주론에서 말하는 극한(limit)과 여극한(colimit)의 가장 단순한 예시이기도 하다.
+
+\vspace{4pt}
+{\scriptsize \textit{출처: Wikipedia — Order theory, Lattice (order)}}
+\end{deepresearch}
+
+집합 $\mathbb{B} = \{\texttt{true}, \texttt{false}\}$에도 $\texttt{false} \leq \texttt{true}$라는 순서가 있다:
+
+\begin{mathbox}
+\[
+\begin{array}{c}
+\texttt{true} \\
+\uparrow \\
+\texttt{false}
+\end{array}
+\]
+\end{mathbox}
+
+\noindent 따라서 $\texttt{false} \leq \texttt{false}$, $\texttt{false} \leq \texttt{true}$, $\texttt{true} \leq \texttt{true}$이지만, $\texttt{true} \not\leq \texttt{false}$이다. 달리 말하면, $A$가 $B$를 함의(imply)하면 $A \leq B$이다.
+
+\begin{exercisebox}[연습문제 1.7]
+$\mathbb{B} = \{\texttt{true}, \texttt{false}\}$ 위의 순서 $\texttt{false} \leq \texttt{true}$를 사용하여, 다음은 무엇인가:
+\begin{enumerate}
+  \item $\texttt{true} \vee \texttt{false}$?
+  \item $\texttt{false} \vee \texttt{true}$?
+  \item $\texttt{true} \vee \texttt{true}$?
+  \item $\texttt{false} \vee \texttt{false}$?
+\end{enumerate}
+\end{exercisebox}
+
+\begin{summarybox}
+\textbf{제1.1절 핵심 정리:}
+\begin{itemize}
+  \item 관찰($\Phi$)은 본질적으로 손실이 있으며, 합류(join) 연산을 보존하지 않을 수 있다.
+  \item 이러한 비보존성을 \textbf{생성적 효과}라 부른다.
+  \item 시스템들은 연결에 의해 자연스러운 순서($\leq$)를 가지며, 이는 하세 다이어그램으로 시각화된다.
+  \item $\Phi(A) \vee \Phi(B) \leq \Phi(A \vee B)$는 생성적 효과의 핵심 부등식이다.
+\end{itemize}
+\end{summarybox}
+
+\end{document}

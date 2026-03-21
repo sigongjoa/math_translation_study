@@ -1,0 +1,14 @@
+============================= test session starts ==============================
+collected 20 items
+
+tests/test_issue_fixes.py::TestWolframVerifier::test_check_unit_non_si PASSED [ 5%]
+tests/test_issue_fixes.py::TestWolframVerifier::test_constants_are_20_or_more PASSED [10%]
+tests/test_issue_fixes.py::TestWolframVerifier::test_verify_formula_brace_mismatch PASSED [15%]
+tests/test_issue_fixes.py::TestWolframVerifier::test_verify_formula_command_mismatch PASSED [20%]
+tests/test_issue_fixes.py::TestWolframVerifier::test_verify_formula_valid PASSED [25%]
+tests/test_issue_fixes.py::TestWolframVerifier::test_warning_logged_without_app_id PASSED [30%]
+tests/test_issue_fixes.py::TestGlossaryArchitect::test_critical_fixes_always_applied PASSED [35%]
+tests/test_issue_fixes.py::TestGlossaryArchitect::test_ollama_failure_graceful PASSED [40%]
+tests/test_issue_fixes.py::TestGlossaryArchitect::test_two_stage_llm_calls PASSED [45%]
+tests/test_wsd_agent.py (11 tests) ... all PASSED
+============================== 20 passed in 1.22s ==============================

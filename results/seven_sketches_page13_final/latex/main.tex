@@ -1,0 +1,269 @@
+\documentclass[11pt, a4paper, twoside, openany]{book}
+
+% ═══════════════════════════════════════════════════════════
+%  Seven Sketches in Compositionality — 한국어 번역 디자인 시스템
+%  Design Sample: Chapter 1.1 (Generative Effects)
+% ═══════════════════════════════════════════════════════════
+
+% ─── 여백 ───
+\usepackage[
+  top=27mm,
+  bottom=22mm,
+  inner=28mm,
+  outer=24mm,
+  bindingoffset=4mm,
+  headheight=14pt,
+  headsep=12pt
+]{geometry}
+
+% ─── 한글 ───
+\usepackage{kotex}
+\usepackage{fontspec}
+
+% ─── 폰트 ───
+\setmainfont{Noto Serif CJK KR}[
+  UprightFont={Noto Serif CJK KR},
+  BoldFont={Noto Serif CJK KR Bold},
+  Ligatures=TeX,
+]
+\setsansfont{Noto Sans CJK KR}[
+  UprightFont={Noto Sans CJK KR},
+  BoldFont={Noto Sans CJK KR Bold},
+  Ligatures=TeX,
+]
+\setmonofont{Noto Sans Mono CJK KR}[Scale=0.85]
+
+% ─── 수식 ───
+\usepackage{amsmath, amssymb, amsthm}
+
+% ─── 그래픽 ───
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes, calc, decorations.pathreplacing, backgrounds}
+
+% ─── 색상 팔레트 (원서 톤 반영: 앰버+블루) ───
+\usepackage{xcolor}
+\definecolor{ctamber}{HTML}{B8860B}      % 원서 참조 링크 색
+\definecolor{ctblue}{HTML}{2C5F8A}       % 챕터/섹션 강조
+\definecolor{ctdark}{HTML}{1A1A2E}       % 본문 제목
+\definecolor{ctlight}{HTML}{F8F4EC}      % 정의 박스 배경
+\definecolor{ctexer}{HTML}{E8F5E9}       % 연습문제 배경
+\definecolor{ctexample}{HTML}{FFF8E1}    % 예제 배경
+\definecolor{ctnote}{HTML}{F3E5F5}       % 역주 배경
+\definecolor{ctgray}{HTML}{607D8B}       % 헤더/캡션
+\definecolor{ctdeep}{HTML}{1B3A5C}       % 딥리서치
+\definecolor{ctred}{HTML}{C62828}        % 경고/강조
+
+% ─── 한글 줄바꿈 최적화 ───
+\XeTeXlinebreaklocale "ko"
+\XeTeXlinebreakskip 0pt plus 3pt
+\emergencystretch 5em
+\tolerance=2000
+\hyphenpenalty=50
+\exhyphenpenalty=50
+\doublehyphendemerits=10000
+\finalhyphendemerits=5000
+\setlength{\hfuzz}{2pt}
+
+% ─── 행간 ───
+\linespread{1.55}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{2pt plus 1pt}
+
+% ─── 박스 디자인 (tcolorbox) ───
+\usepackage[most]{tcolorbox}
+
+% ◆ 정의 (Definition) — 차분한 크림색 배경
+\newtcolorbox{definitionbox}[1][]{
+  enhanced, colback=ctlight, colframe=ctamber!70!black,
+  coltitle=white, fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  attach boxed title to top left={yshift=-2mm, xshift=4mm},
+  boxed title style={colback=ctamber!80, sharp corners, boxrule=0pt},
+  sharp corners, boxrule=0.6pt, breakable,
+  left=10pt, right=10pt, top=10pt, bottom=8pt,
+}
+
+% ◆ 연습문제 (Exercise) — 녹색 계열
+\newtcolorbox{exercisebox}[1][]{
+  enhanced, colback=ctexer, colframe=ctblue!40!green!60,
+  fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  sharp corners, boxrule=0pt, leftrule=4pt, breakable,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+}
+
+% ◆ 예제 (Example) — 따뜻한 노란색
+\newtcolorbox{examplebox}[1][]{
+  enhanced, colback=ctexample, colframe=ctamber!50,
+  fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  sharp corners, boxrule=0pt, leftrule=4pt, breakable,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+}
+
+% ◆ 비고 (Remark) — 차분한 보라색/회색 톤
+\newtcolorbox{remarkbox}[1][]{
+  enhanced, colback=ctnote, colframe=ctgray!50,
+  fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  sharp corners, boxrule=0pt, leftrule=4pt, breakable,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+}
+
+% ◆ 역주 (Translator's Note)
+\newtcolorbox{translatornote}[1][]{
+  enhanced, colback=ctnote!50, colframe=ctgray!40,
+  fonttitle=\sffamily\bfseries\small,
+  title={\raisebox{-0.5pt}{\textsf{*}} 역주},
+  sharp corners, boxrule=0pt, leftrule=3pt, breakable,
+  left=10pt, right=10pt, top=6pt, bottom=6pt,
+  fontupper=\small, #1
+}
+
+% ◆ 심층 해설 (Deep Research)
+\newtcolorbox{deepresearch}[1][]{
+  enhanced, colback=ctdeep!5, colframe=ctdeep!70,
+  coltitle=white, fonttitle=\sffamily\bfseries\small,
+  title={#1},
+  attach boxed title to top left={yshift=-2mm, xshift=4mm},
+  boxed title style={colback=ctdeep!80, sharp corners, boxrule=0pt},
+  sharp corners, boxrule=0.6pt, breakable,
+  left=10pt, right=10pt, top=10pt, bottom=8pt,
+  shadow={1.5pt}{-1.5pt}{0pt}{ctdeep!15}
+}
+
+% ◆ 핵심 개념 (Key Concept)
+\newtcolorbox{keyconcept}[1][]{
+  enhanced, colback=white, colframe=ctdark,
+  coltitle=white, fonttitle=\sffamily\bfseries,
+  title={#1},
+  attach boxed title to top center={yshift=-3mm},
+  boxed title style={colback=ctdark, sharp corners, boxrule=0pt},
+  sharp corners, boxrule=1pt, breakable,
+  left=12pt, right=12pt, top=12pt, bottom=10pt
+}
+
+% ◆ 다이어그램 (Figure) — 깔끔한 프레임
+\newtcolorbox{diagrambox}[1][]{
+  enhanced, colback=white, colframe=ctgray!40,
+  fonttitle=\sffamily\small\color{ctgray}, title={#1},
+  attach boxed title to top center={yshift=-2mm},
+  boxed title style={colback=white, colframe=ctgray!40, boxrule=0.4pt, sharp corners},
+  sharp corners, boxrule=0.4pt, breakable,
+  left=6pt, right=6pt, top=8pt, bottom=6pt
+}
+
+% ◆ 수식 하이라이트
+\newtcolorbox{mathbox}{
+  enhanced, colback=ctlight!70, colframe=ctamber!40,
+  sharp corners, boxrule=0.5pt,
+  left=14pt, right=14pt, top=10pt, bottom=10pt,
+  before skip=10pt, after skip=10pt
+}
+
+% ◆ 핵심 요약 (Summary)
+\newtcolorbox{summarybox}{
+  enhanced, colback=white, colframe=ctdark,
+  fonttitle=\sffamily\bfseries\small,
+  title={\small 핵심 요약},
+  sharp corners, boxrule=0.5pt, breakable,
+  left=10pt, right=10pt, top=6pt, bottom=6pt
+}
+
+% ─── 헤더/푸터 ───
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{{\small\sffamily\color{ctgray} 합성성의 일곱 가지 스케치 \hfill \thepage}}
+\fancyhead[RO]{{\small\sffamily\color{ctgray} \thepage \hfill \rightmark}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\color{ctgray!40}\hrule width\headwidth height\headrulewidth}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\small\color{ctgray}\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% ─── 제목 스타일 ───
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]
+  {\normalfont}
+  {\hfill{\fontsize{72}{72}\selectfont\sffamily\color{ctblue!20}\thechapter}}
+  {-20pt}
+  {\sffamily\bfseries\Huge\color{ctdark}}
+  [\vspace{2pt}{\color{ctgray!40}\titlerule[1pt]}]
+\titlespacing*{\chapter}{0pt}{-30pt}{30pt}
+
+\titleformat{\section}[hang]
+  {\sffamily\bfseries\LARGE\color{ctdeep}}
+  {\thesection}{10pt}{}
+\titlespacing*{\section}{0pt}{24pt}{10pt}
+
+\titleformat{\subsection}[hang]
+  {\sffamily\bfseries\large\color{ctdark}}
+  {\thesubsection}{8pt}{}
+\titlespacing*{\subsection}{0pt}{16pt}{6pt}
+
+% ─── 교차참조 ───
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ctblue,
+  urlcolor=ctamber,
+  citecolor=ctamber,
+  pdfborder={0 0 0},
+  bookmarksnumbered=true,
+  pdftitle={합성성의 일곱 가지 스케치 — 응용 범주론 초대},
+  pdfauthor={Brendan Fong, David I. Spivak — 한국어 번역},
+}
+
+% ─── 목차/열거 ───
+\setcounter{tocdepth}{2}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em, itemsep=2pt}
+\setlist[enumerate]{leftmargin=1.5em, itemsep=2pt}
+
+% ─── lettrine (챕터 첫 글자 장식) ───
+\usepackage{lettrine}
+
+% ═══════════════════════════════════════════════════════════
+
+\begin{document}
+
+\tableofcontents
+\clearpage
+
+
+\begin{definitionbox}[]
+정의 1.30. 집합 X 위의 전순서 관계는 X의 이진 관계이며, 내항 기호 ≤로 나타내며 다음 조건을 만족한다: (a) x ≤ x; 그리고 (b) 만약 x ≤ y이고 y ≤ z이면 x ≤ z. 첫 번째 조건은 반사성이라고 하고 두 번째 조건은 전이성이라고 한다. x ≤ y이고 y ≤ x인 경우, x ≡ y 라고 쓰고 x와 y가 동치라고 한다. 집합과 전순서 관계로 구성된 쌍 (X, ≤)를 전순서라고 한다.
+\end{definitionbox}
+
+
+1.31.  반사성과 전이성은 정의 1.18에서 알 수 있듯이 친숙한 개념입니다. 전순서는 대칭 조건이 없는 동치 관계와 같습니다.
+
+
+\begin{examplebox}[Example  1.32]
+(이산 전순서) 모든 집합 X는 이산 전순서 (X, )로 간주될 수 있다.  이는 X 위의 유일한 순서 관계가 x ≤ x 형태이며, x ≠ y라면 x ≤ y 또는 y ≤ x 가 성립하지 않는다는 것을 의미한다. 이산 전순서는 단지 점들의 집합으로 나타낸다: • • •
+\end{examplebox}
+
+
+\begin{examplebox}[Example  1.33]
+(여이산 전순서) 모든 집합에서 우리는 그 여이산 전순서 $(X, \leq)$ 를 구성할 수 있습니다.  $X × X ⊆ X × X$ 라는 총 이진 관계를 부여함으로써 이루어집니다. 이는 매우 간단한 구조입니다: $X$ 의 모든 x 와 y 에 대해 $x ≤ y$ (그리고 따라서 $y ≤ x$) 가 성립한다는 것을 의미합니다.
+\end{examplebox}
+
+
+\begin{examplebox}[Example  1.34]
+불리언 집합 {false, true}은 전순서(preorder)를 이룬다.  false ≤ true.
+\end{examplebox}
+
+
+1.35 (부분순서는 골격성 전순서이다)
+
+전순서는 부분순서가 되기 위해 추가적으로 x  y 라면 x  y 를 만족해야 한다.  범주 이론 용어로, x  y 라면 x  y 를 요구하는 것은 골격성이라고 알려져 있으므로, 부분 순서는 골격성 전순서이다. 간단히 말해서, 포셋(partially ordered set)이라는 단어도 사용한다.  전순서와 부분 순서 사이의 차이는 상당히 작다. 부분 순서는 이미 전순서이며, 모든 전순서는 x  y 라는 조건을 만족하는 모든 x, y에 대해 x = y로 같게 만들어 부분 순서로 만들 수 있다. 예를 들어, 어떤 이산 전순서는 이미 부분 순서이고, 어떤 여이산 전순서는 단 하나의 원소 집합에서 유일한 부분 순서가 된다.
+
+
+\end{document}

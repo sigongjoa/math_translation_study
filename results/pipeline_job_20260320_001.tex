@@ -1,0 +1,197 @@
+\documentclass[11pt,a4paper,oneside]{memoir}
+% ── Korean / CJK fonts (XeLaTeX) ─────────────────────────────────────────
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Serif CJK KR}[
+  BoldFont   = Noto Serif CJK KR,
+  ItalicFont = Noto Serif CJK KR
+]
+\setCJKsansfont{Noto Sans CJK KR}
+\setmainfont{DejaVu Serif}[Scale=0.95]
+\setsansfont{DejaVu Sans}[Scale=0.95]
+\setmonofont{DejaVu Sans Mono}[Scale=0.85]
+
+% ── Page layout (memoir) ─────────────────────────────────────────────────
+\settrimmedsize{297mm}{210mm}{*}
+\setlength{\trimtop}{0pt}
+\setlength{\trimedge}{\stockwidth}
+\addtolength{\trimedge}{-\paperwidth}
+\settypeblocksize{240mm}{150mm}{*}
+\setulmargins{30mm}{*}{*}
+\setlrmargins{30mm}{*}{*}
+\checkandfixthelayout
+
+% ── Colours ──────────────────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{ChapterBlue}{RGB}{30,70,130}
+\definecolor{OrigBg}{RGB}{252,252,248}
+\definecolor{KoBg}{RGB}{245,250,255}
+\definecolor{OrigBorder}{RGB}{180,180,170}
+\definecolor{KoBorder}{RGB}{100,150,200}
+\definecolor{ScoreGreen}{RGB}{30,130,50}
+\definecolor{ScoreOrange}{RGB}{200,100,0}
+\definecolor{ScoreRed}{RGB}{180,30,30}
+
+% ── tcolorbox (callout boxes) ────────────────────────────────────────────
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\tcbset{
+  origstyle/.style={
+    enhanced, breakable,
+    colback=OrigBg, colframe=OrigBorder,
+    fonttitle=\small\bfseries\sffamily,
+    title={원문 (English)},
+    boxrule=0.4pt, arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt,
+    coltitle=black
+  },
+  kostyle/.style={
+    enhanced, breakable,
+    colback=KoBg, colframe=KoBorder,
+    fonttitle=\small\bfseries\sffamily,
+    title={번역 (Korean)},
+    boxrule=0.6pt, arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt,
+    coltitle=ChapterBlue
+  }
+}
+
+% ── Chapter / Section style (memoir) ─────────────────────────────────────
+\chapterstyle{section}
+\setsecheadstyle{\large\bfseries\sffamily\color{ChapterBlue}}
+\setsubsecheadstyle{\normalsize\bfseries\sffamily}
+
+% ── Header / footer ──────────────────────────────────────────────────────
+\makepagestyle{bookstyle}
+\makeoddhead{bookstyle}{\small\itshape E2E}{}{\small\thepage}
+\makeevenhead{bookstyle}{\small\thepage}{}{\small\itshape 번역 파이프라인}
+\makeheadrule{bookstyle}{\textwidth}{0.4pt}
+\pagestyle{bookstyle}
+
+% ── Hyperlinks ────────────────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true, linkcolor=ChapterBlue,
+  urlcolor=teal, pdfauthor={Translation Pipeline},
+  pdftitle={E2E}
+}
+
+% ── Misc ─────────────────────────────────────────────────────────────────
+\usepackage{microtype}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5\baselineskip}
+
+\begin{document}
+
+% ── Title page ───────────────────────────────────────────────────────────
+\begin{titlingpage}
+\vspace*{3cm}
+{\sffamily
+  \begin{center}
+    {\color{ChapterBlue}\rule{\textwidth}{2pt}}\\[1em]
+    {\Huge\bfseries E2E}\\[0.8em]
+    {\large 영한 기계번역 결과물}\\[0.5em]
+    {\color{ChapterBlue}\rule{\textwidth}{1pt}}\\[2em]
+    {\normalsize\ttfamily test://e2e}\\[0.3em]
+    {\small 페이지 범위: 0-0 \quad 섹션 수: 4}\\[0.5em]
+    {\small\color{gray} Job ID: \texttt{job\_20260320\_001}}
+  \end{center}
+}
+\vfill
+{\small\color{gray} \textit{본 문서는 PCM 번역 파이프라인으로 자동 생성되었습니다.\\
+번역 품질 평가 포함: FluencyAgent (G-Eval), NaturalnessEditor, BackTranslationVerifier}}
+\end{titlingpage}
+
+\clearpage
+\tableofcontents*
+\clearpage
+
+\section{1.1}
+\noindent \textbf{\color{ScoreGreen}점수: 100.0} \quad 도메인: \textit{algebra} \quad {\small acc=10 flu=10 tone=10 term=10} \quad \textcolor{ScoreGreen}{BT: 0.75} \quad \textcolor{gray}{\small ✎ 수식 공백}
+\vspace{0.4em}
+
+\begin{tcolorbox}[origstyle]
+\small Definition 1.1 (Group). A group is a set \$G\$ together with a binary operation \$\textbackslash\{\}cdot: G \textbackslash\{\}times G \textbackslash\{\}to G\$ satisfying: (i) Associativity: \$(a \textbackslash\{\}cdot b) \textbackslash\{\}cdot c = a \textbackslash\{\}cdot (b \textbackslash\{\}cdot c)\$ for all \$a, b, c \textbackslash\{\}in G\$. (ii) Identity: there exists \$e \textbackslash\{\}in G\$ such that \$e \textbackslash\{\}cdot a = a \textbackslash\{\}cdot e = a\$. (iii) Inverses: for each \$a \textbackslash\{\}in G\$ there exists \$a\textasciicircum{}\{-1\}\$ with \$a \textbackslash\{\}cdot a\textasciicircum{}\{-1\} = e\$.
+\end{tcolorbox}
+\vspace{0.3em}
+
+\begin{tcolorbox}[kostyle]
+\begin{motivation}
+그룹이란 개념은 수학에서 다양한 시스템을 일관된 방식으로 연구할 수 있게 해줍니다. 예를 들어, 정수의 덧셈이나 곱셈, 회전과 번역을 포함한 기하학적 변환 등이 모두 그룹의 예입니다. 이러한 다양한 시스템을 하나의 공통된 구조로 묶어, 그 속성을 일반화하고 더 깊이 이해할 수 있게 해줍니다.
+\end{motivation}
+
+정의 1.1 (군). 군은 이항 연산$\cdot: G \times G \to G$와 함께 집합$G$로 구성되며, 다음과 같은 조건을 만족시킨다. (i) 결합법칙:$(a \cdot b) \cdot c = a \cdot (b \cdot c)$가 모든$a, b, c \in G$에 대해 성립한다. (ii) 항등원:$G$에 속한$e$가 존재하여$e \cdot a = a \cdot e = a$이다. (iii) 역원:$G$의 각$a$에 대해$a^{-1}$이 존재하여$a \cdot a^{-1} = e$이다.
+
+\begin{plainexplain}
+  군이라는 개념은 여러 가지 다른 시스템을 하나로 묶는 키트 같은 거예요. 예를 들어, 숫자를 더하거나 곱하는 것, 또는 도형을 회전하거나 옮기는 것 등이 모두 군의 일종이 될 수 있어요. 이렇게 다양한 시스템을 군이라는 공통의 틀에 넣으면, 그 안에서 일어나는 일들을 더 쉽게 이해하고 일반화할 수 있어요.
+\end{plainexplain}
+\end{tcolorbox}
+\vspace{0.8em}
+
+\section{1.2}
+\noindent \textbf{\color{ScoreGreen}점수: 100.0} \quad 도메인: \textit{algebra} \quad {\small acc=10 flu=10 tone=10 term=10} \quad \textcolor{ScoreGreen}{BT: 0.70} \quad \textcolor{gray}{\small ✎ 수식 공백}
+\vspace{0.4em}
+
+\begin{tcolorbox}[origstyle]
+\small Theorem 1.2 (Lagrange). If \$G\$ is a finite group and \$H\$ is a subgroup of \$G\$, then \$|H|\$ divides \$|G|\$. Proof. The left cosets \$aH\$ partition \$G\$ into equal-sized classes of size \$|H|\$. Hence \$|G| = [G:H] \textbackslash\{\}cdot |H|\$. \$\textbackslash\{\}square\$
+\end{tcolorbox}
+\vspace{0.3em}
+
+\begin{tcolorbox}[kostyle]
+\begin{motivation}
+이 정리는 그룹 이론에서 매우 중요한 역할을 합니다. 그룹의 구조를 이해하고 분석할 때, 부분 그룹의 크기가 전체 그룹의 크:<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /?>크게 나누어진다는 사실을 쉽게 확인할 수 있게 해주기 때문입니다. 이는 18
+\end{motivation}
+
+정리 1.2 (라그랑주). 만약$G$가 유한군이고$H$가$G$의 부분군이라면,$|H|$는$|G|$의 약수이다. 증명. 왼쪽 잉여류$aH$는$G$를 크기가$|H|$인 같은 크기의 클래스로 분할한다. 따라서$|G| = [G:H] \cdot |H|$이다.$\square$
+
+\begin{plainexplain}
+  이 정리는 군의 구조를 이해하는 데 매우 중요합니다. 부분 군의 크기가 전체 군의 크기와 어떻게 관련되어 있는지 쉽게 알아볼 수 있게 해줍니다. 예를 들어, 만약 전체 군이 24명의 회원을 가진다고 생각해보세요. 그 중에서 8명의 회원을 가진 부분 군이 있다면, 이는 전체 군의 크기가 부분 군의 크기(8명)의 약수라는 것을 쉽게 확인할 수 있게 해줍니다. 이렇게 하면 군의 구조를 더 잘 이해할 수 있습니다.
+\end{plainexplain}
+\end{tcolorbox}
+\vspace{0.8em}
+
+\section{2.1}
+\noindent \textbf{\color{ScoreRed}점수: 10.0} \quad 도메인: \textit{algebra} \quad {\small acc=1 flu=1 tone=1 term=1} \quad \textcolor{ScoreGreen}{BT: 1.00} \quad \textcolor{gray}{\small ✎ 수식 공백, 수식 공백}
+\vspace{0.4em}
+
+\begin{tcolorbox}[origstyle]
+\small Definition 2.1 (Ring). A ring \$(R, +, \textbackslash\{\}cdot)\$ is an abelian group \$(R, +)\$ equipped with an associative multiplication \$\textbackslash\{\}cdot\$ that distributes over \$+\$: \$a \textbackslash\{\}cdot (b + c) = a \textbackslash\{\}cdot b + a \textbackslash\{\}cdot c\$ and \$(a + b) \textbackslash\{\}cdot c = a \textbackslash\{\}cdot c + b \textbackslash\{\}cdot c\$. Groups arise naturally in rings: the group of units \$R\textasciicircum{}\{\textbackslash\{\}times\}\$ consists of all elements \$r \textbackslash\{\}in R\$ for which a multiplicative inverse exists.
+\end{tcolorbox}
+\vspace{0.3em}
+
+\begin{tcolorbox}[kostyle]
+\begin{motivation}
+반환 연산과 곱셈 연산이 서로 관련되어 있는 구조를 연구하기 위해 이라는 개념이 필요합니다. 이는 수학에서 다양한 문제를 해결하고, 특히 대수학과 정수론에서 중요한 역할을 하기 때문입니다.
+\end{motivation}
+
+Definition 2.1 (Ring). A ring$(R, +, \cdot)$is an abelian group$(R, +)$equipped with an associative multiplication$\cdot$that distributes over$+$:$a \cdot (b + c) = a \cdot b + a \cdot c$and$(a + b) \cdot c = a \cdot c + b \cdot c$. Groups arise naturally in rings: the group of units$R^{\times}$consists of all elements$r \in R$for which a multiplicative inverse exists.
+
+
+\end{tcolorbox}
+\vspace{0.8em}
+
+\section{2.2}
+\noindent \textbf{\color{ScoreGreen}점수: 100.0} \quad 도메인: \textit{number\_theory} \quad {\small acc=10 flu=10 tone=10 term=10} \quad \textcolor{ScoreGreen}{BT: 0.93} \quad \textcolor{gray}{\small ✎ 수식 공백}
+\vspace{0.4em}
+
+\begin{tcolorbox}[origstyle]
+\small Theorem 2.2 (Chinese Remainder Theorem). Let \$m\_1, \textbackslash\{\}ldots, m\_k\$ be pairwise coprime positive integers and \$M = m\_1 \textbackslash\{\}cdots m\_k\$. Then \$\textbackslash\{\}mathbb\{Z\}/M\textbackslash\{\}mathbb\{Z\} \textbackslash\{\}cong \textbackslash\{\}mathbb\{Z\}/m\_1\textbackslash\{\}mathbb\{Z\} \textbackslash\{\}times \textbackslash\{\}cdots \textbackslash\{\}times \textbackslash\{\}mathbb\{Z\}/m\_k\textbackslash\{\}mathbb\{Z\}\$ as rings. Proof. The map \$x \textbackslash\{\}mapsto (x \textbackslash\{\}bmod m\_1, \textbackslash\{\}ldots, x \textbackslash\{\}bmod m\_k)\$ is a ring isomorphism.
+\end{tcolorbox}
+\vspace{0.3em}
+
+\begin{tcolorbox}[kostyle]
+\begin{motivation}
+중국인 나머지 정리
+\end{motivation}
+
+정리 2.2 (중국인의 나머지 정리). 서로소인 양의 정수$m_1, \ldots, m_k$와$M = m_1 \cdots m_k$를 고정하자. 그러면 가환환으로 보면$\mathbb{Z}/M\mathbb{Z} \cong \mathbb{Z}/m_1\mathbb{Z} \times \cdots \times \mathbb{Z}/m_k\mathbb{Z}$이다. 증명. 맵$x \mapsto (x \bmod m_1, \ldots, x \bmod m_k)$는 가환환 동형이다.
+
+\begin{plainexplain}
+  이 중국인 나머지 정리는 좀 복잡해 보일 수 있지만, 실제로는 우리가 일상에서 자주 쓰는 여러 번의 나머지 계산을 일반화한 개념입니다. 예를 들어, 만약 3개의 서로 다른 시계 시계가 있고, 각각 4시간, 5시간, 6시간의 주기를 가지고 있다면, 이 정리는 여러 시계가 동시에 같은 시간을 보일 때까지 얼마나 오랜 시간이 걸릴지를 계산하는 데 도움이 됩니다. 여기서 4, 5, 6은 서로소가 아니지만, 이 개념을 이해하면 이런 문제도 쉽게 풀 수 있습니다.
+\end{plainexplain}
+\end{tcolorbox}
+\vspace{0.8em}
+
+\end{document}

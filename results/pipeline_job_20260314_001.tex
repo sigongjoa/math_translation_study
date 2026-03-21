@@ -1,0 +1,205 @@
+\documentclass[11pt,a4paper,oneside]{memoir}
+% ── Korean / CJK fonts (XeLaTeX) ─────────────────────────────────────────
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Serif CJK KR}[
+  BoldFont   = Noto Serif CJK KR,
+  ItalicFont = Noto Serif CJK KR
+]
+\setCJKsansfont{Noto Sans CJK KR}
+\setmainfont{DejaVu Serif}[Scale=0.95]
+\setsansfont{DejaVu Sans}[Scale=0.95]
+\setmonofont{DejaVu Sans Mono}[Scale=0.85]
+
+% ── Page layout (memoir) ─────────────────────────────────────────────────
+\settrimmedsize{297mm}{210mm}{*}
+\setlength{\trimtop}{0pt}
+\setlength{\trimedge}{\stockwidth}
+\addtolength{\trimedge}{-\paperwidth}
+\settypeblocksize{240mm}{150mm}{*}
+\setulmargins{30mm}{*}{*}
+\setlrmargins{30mm}{*}{*}
+\checkandfixthelayout
+
+% ── Colours ──────────────────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{ChapterBlue}{RGB}{30,70,130}
+\definecolor{OrigBg}{RGB}{252,252,248}
+\definecolor{KoBg}{RGB}{245,250,255}
+\definecolor{OrigBorder}{RGB}{180,180,170}
+\definecolor{KoBorder}{RGB}{100,150,200}
+\definecolor{ScoreGreen}{RGB}{30,130,50}
+\definecolor{ScoreOrange}{RGB}{200,100,0}
+\definecolor{ScoreRed}{RGB}{180,30,30}
+
+% ── tcolorbox (callout boxes) ────────────────────────────────────────────
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\tcbset{
+  origstyle/.style={
+    enhanced, breakable,
+    colback=OrigBg, colframe=OrigBorder,
+    fonttitle=\small\bfseries\sffamily,
+    title={원문 (English)},
+    boxrule=0.4pt, arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt,
+    coltitle=black
+  },
+  kostyle/.style={
+    enhanced, breakable,
+    colback=KoBg, colframe=KoBorder,
+    fonttitle=\small\bfseries\sffamily,
+    title={번역 (Korean)},
+    boxrule=0.6pt, arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt,
+    coltitle=ChapterBlue
+  }
+}
+
+% ── Chapter / Section style (memoir) ─────────────────────────────────────
+\chapterstyle{section}
+\setsecheadstyle{\large\bfseries\sffamily\color{ChapterBlue}}
+\setsubsecheadstyle{\normalsize\bfseries\sffamily}
+
+% ── Header / footer ──────────────────────────────────────────────────────
+\makepagestyle{bookstyle}
+\makeoddhead{bookstyle}{\small\itshape Llm Agents Survey}{}{\small\thepage}
+\makeevenhead{bookstyle}{\small\thepage}{}{\small\itshape 번역 파이프라인}
+\makeheadrule{bookstyle}{\textwidth}{0.4pt}
+\pagestyle{bookstyle}
+
+% ── Hyperlinks ────────────────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true, linkcolor=ChapterBlue,
+  urlcolor=teal, pdfauthor={Translation Pipeline},
+  pdftitle={Llm Agents Survey}
+}
+
+% ── Misc ─────────────────────────────────────────────────────────────────
+\usepackage{microtype}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5\baselineskip}
+
+\begin{document}
+
+% ── Title page ───────────────────────────────────────────────────────────
+\begin{titlingpage}
+\vspace*{3cm}
+{\sffamily
+  \begin{center}
+    {\color{ChapterBlue}\rule{\textwidth}{2pt}}\\[1em]
+    {\Huge\bfseries Llm Agents Survey}\\[0.8em]
+    {\large 영한 기계번역 결과물}\\[0.5em]
+    {\color{ChapterBlue}\rule{\textwidth}{1pt}}\\[2em]
+    {\normalsize\ttfamily test\_pdfs/llm\_agents\_survey.pdf}\\[0.3em]
+    {\small 페이지 범위: 3-6 \quad 섹션 수: 6}\\[0.5em]
+    {\small\color{gray} Job ID: \texttt{job\_20260314\_001}}
+  \end{center}
+}
+\vfill
+{\small\color{gray} \textit{본 문서는 PCM 번역 파이프라인으로 자동 생성되었습니다.\\
+번역 품질 평가 포함: FluencyAgent (G-Eval), NaturalnessEditor, BackTranslationVerifier}}
+\end{titlingpage}
+
+\clearpage
+\tableofcontents*
+\clearpage
+
+\section{intro §1}
+\noindent \textbf{\color{ScoreGreen}점수: 73.0} \quad 도메인: \textit{general} \quad {\small acc=8 flu=7 tone=8 term=6} \quad \textcolor{ScoreRed}{BT: 0.44}
+\vspace{0.4em}
+
+\begin{tcolorbox}[origstyle]
+\small 1 Introduction “If they find a parrot who could answer to everything, I would claim it to be an intelligent being without hesitation.” —Denis Diderot, 1875 Artificial Intelligence (AI) is a field dedicated to designing and developing systems that can replicate human-like intelligence and abilities [ 1 ]. As early as the 18th century, philosopher Denis Diderot introduced the idea that if a parrot could respond to every question, it could be considered intelligent [ 2 ]. While Diderot was referring to living beings, like the parrot, his notion highlights the profound concept that a highly intelligent organism could resemble human intelligence. In the 1950s, Alan Turing expanded this notion to artificial entities and proposed the renowned Turing Test [ 3 ]. This test is a cornerstone in AI and aims to explore whether machines can display intelligent behavior comparable to humans. These AI entities are often termed “agents”, forming the essential building blocks of AI systems. Typically in\ldots
+\end{tcolorbox}
+\vspace{0.3em}
+
+\begin{tcolorbox}[kostyle]
+1. 소개
+“만약 모든 질문에 답할 수 있는 파랑새를 발견한다면, 나는 그를 지능적인 존재로 인정할 것이다.” —Denis Diderot, 1775  
+인공지능(AI)은 인간의 지능과 능력을 재현할 수 있는 시스템을 설계하고 개발하는 분야이다 [1]. 18세기 초, 철학자 Denis Diderot은 파랑새가 모든 질문에 답할 수 있다면 지능적인 존재로 간주될 수 있음을 제시하였다 [2]. Diderot은 살아있는 생물, 즉 파랑새를 언급했지만, 그의 개념은 매우 지능적인 생물이 인간의 지능을 닮을 수 있다는 깊은 개념을 강조한다. 1950년대, Alan Turing은 이 개념을 인공 존재로 확장하고 명명된 튜링 테스트를 제안하였다 [3]. 이 테스트는 AI의 기초이며, 기계가 인간과 유사한 지능적 행동을 표출할 수 있는지 탐구하는 데 중점을 두고 있다. 이러한 AI 존재는 종종 "agent"로 명명되며, AI 시스템의 필수적인 구성 요소를 형성한다. AI에서 보통 agent는 센서를 사용하여 환경을 인식하고 결정을 내리고, 그에 따라 액터를 사용하여 행동을 취할 수 있는 인공 존재를 의미한다 [1; 4]. agent의 개념은 철학에서 유래하며, 아리스토텔레스와 헤임 같은 사상가들의 생각에서 비롯되었다 [5]. 이 개념은 욕구, 믿음, 의도, 행동을 취할 수 있는 능력을 가진 존재를 묘사한다 [5]. 이 아이디어는 컴퓨터 과학으로 전이되어 컴퓨터가 사용자의 관심사를 이해하고 대체로 행동을 수행할 수 있도록 하는 데 초점을 맞추었다 [6; 7; 8]. AI가 발전하면서 "agent"라는 용어는 AI 연구에서 지능적 행동을 보여주고 자율성, 반응성, 적극성, 사회성 같은 특성을 가진 존재를 묘사하는 데 자리매김하였다 [4; 9]. 그 이후로, agent의 탐구와 기술적 발전은 AI 커뮤니티의 핵심 주제가 되었다 [1; 10]. AI agent는 이제 인공 일반 지능(AGI) 1 달성의 중요한 발걸음으로 인정받고 있으며, 다양한 지능적 활동의 잠재력을 포함한다 [4; 11; 12]. 20세기 중반부터, 연구가 설계와 발전에 심도 있게 들어가면서 지능화된 AI agent의 개발에 중요한 진전이 이루어졌다 [13; 14; 15; 16; 17; 18].
+\end{tcolorbox}
+\vspace{0.8em}
+
+\section{intro §2}
+\noindent \textbf{\color{ScoreGreen}점수: 79.0} \quad 도메인: \textit{nlp} \quad {\small acc=8 flu=7 tone=9 term=8} \quad \textcolor{ScoreRed}{BT: 0.49}
+\vspace{0.4em}
+
+\begin{tcolorbox}[origstyle]
+\small However, these efforts have predominantly focused on enhancing specific capabilities, such as symbolic reasoning, or mastering particular tasks like Go or Chess [ 19 ; 20 ; 21 ]. Achieving a broad adaptability across varied scenarios remained elusive. Moreover, previous studies have placed more emphasis on the design of algorithms and training strategies, overlooking the development of the model’s inherent general abilities like knowledge memorization, long-term planning, effective generalization, and efficient interaction [ 22 ; 23 ]. Actually, enhancing the inherent capabilities of the model is the pivotal factor for advancing the agent further, and the domain is in need of a powerful foundational model endowed with a variety of key attributes mentioned above to serve as a starting point for agent systems. The development of large language models (LLMs) has brought a glimmer of hope for the further development of agents [ 24 ; 25 ; 26 ], and significant progress has been made by the \ldots
+\end{tcolorbox}
+\vspace{0.3em}
+
+\begin{tcolorbox}[kostyle]
+그러나 이러한 노력들은 주로 심볼릭 추론을 강화하거나 Go나 체스와 같은 특정 작업을 마스터하는 등 특정 능력에 집중해 왔습니다.[19; 20; 21]. 다양한 상황에서의 광범위한 적응성 달성은 여전히 어려웠습니다. 또한, 이전 연구들은 알고리즘 설계와 훈련 전략에 더 많은 초점을 맞추어, 모델의 내재적인 일반 능력, 즉 지식 기억, 장기 계획, 효과적인 일반화, 효율적인 상호작용과 같은 개발을 소홀히 해왔습니다.[22; 23]. 실제로, 모델의 내재적인 능력을 강화하는 것이 에이전트를 더욱 발전시키는 핵심 요인임이 명백하며, 이러한 다양한 중요한 특성을 갖춘 강력한 기반 모델이 필요합니다.[22; 27; 28; 29]. 이 기반 모델은 에이전트 시스템의 출발점이 될 수 있습니다. 대형 언어 모델(LLM)의 발전은 에이전트의 추가 발전에 대한 희망을 가져왔습니다.[24; 25; 26] 그리고 커뮤니티는 중요한 진전을 이룩했습니다.[22; 27; 28; 29]. 세계 범위(World Scope, WS)라는 개념[30]은 NLP에서 일반 인공지능(GAI)까지의 연구 진척을 5단계로 묘사하며, 이는 코퍼스, 인터넷, 인식, 체제, 사회까지의 단계를 포함합니다. 순수 LLM은 인터넷 규모의 텍스트 입력과 출력을 기반으로 인터넷 수준의 두 번째 단계에 구축됩니다. 그럼에도 불구하고, LLM은 지식 획득, 지시사항 이해, 일반화, 계획, 추론 등 강력한 능력을 보여주며, 인간과 효과적인 자연어 상호작용을 보여줍니다. 이러한 장점들은 LLM을 AGI의 불꽃으로 지정시켜, 인간과 에이전트가 조화롭게 공존하는 세계를 위한 지능형 에이전트의 구축을 위한 매우 유망한 대상으로 만듭니다.[22]. 이러한 점에서, LLM을 에이전트로 격상시키고 확장된 인식 공간과 행동 공간을 장착하면, WS의 세 번째와 네 번째 단계에 도달할 수 있습니다. 또한, 이러한 LLM 기반 에이전트들은 협력이나 경쟁을 통해 더 복잡한 작업을 수행할 수 있으며, 그들을 함께 배치하면 사회적 현상이 발생하여 WS의 다섯 번째 단계에 도달할 수 있습니다. 그림 1을 참조하면, AI 에이전트와 인간이 함께 조화로운 사회를 구성하는 것을 상상할 수 있습니다. 이 논문에서는 이러한 LLM 기반 에이전트에 초점을 맞춘 포괄적이고 체계적인 조사 연구를 제시하며, 이 분야의 현재 연구와 미래의 가능성을 탐구하려 합니다. 이를 위해, 우리는 첫 번째 섹션에서 핵심 배경 정보를 살펴보겠습니다(§2).
+\end{tcolorbox}
+\vspace{0.8em}
+
+\section{intro §3}
+\noindent \textbf{\color{ScoreOrange}점수: 65.0} \quad 도메인: \textit{machine\_learning} \quad {\small acc=7 flu=6 tone=7 term=6} \quad \textcolor{ScoreRed}{BT: 0.43}
+\vspace{0.4em}
+
+\begin{tcolorbox}[origstyle]
+\small In particular, we commence by tracing the origin of AI agents from philosophy to the AI domain, along with a brief overview of the 1 Also known as Strong AI. An Envisioned Agent Society Kitchen Task planning and solving Ordering dishes and Acting with tools cooking Discussing decoration Outdoors Concert User Cooperation Let me experience the festival in this world... Band performing Figure 1: Scenario of an envisioned society composed of AI agents, in which humans can also participate. The above image depicts some specific scenes within society. In the kitchen, one agent orders dishes, while another agent is responsible for planning and solving the cooking task. At the concert, three agents are collaborating to perform in a band. Outdoors, two agents are discussing lantern-making, planning the required materials, and finances by selecting and using tools. Users can participate in any of these stages of this social activity. debate surrounding the existence of artificial agents (§ 2.1 )\ldots
+\end{tcolorbox}
+\vspace{0.3em}
+
+\begin{tcolorbox}[kostyle]
+특히, 우리는 인공지능 에이전트의 기원을 철학에서 인공지능 분야까지 추적하면서 강한 인공지능(Strong AI)에 대해 간략한 개요를 제공합니다. 1 (Figure 1: 예상된 인공지능 에이전트 사회의 시나리오, 인간도 참여 가능. 위 그림은 사회 내부의 일부 특정 장면을 보여줍니다. 주방에서 한 에이전트는 요리를 위한 요리를 주문하고, 다른 에이전트는 요리를 계획하고 해결합니다. 콘서트에서는 세 개의 에이전트가 밴드로 협력하여 공연합니다. 야외에서는 두 개의 에이전트가 조명 만들기에 대해 논의하고 필요한 재료와 재정을 계획하며 도구를 선택하고 사용합니다. 사용자는 이러한 사회 활동의 어느 단계든지 참여할 수 있습니다.) 인공 에이전트의 존재에 대한 논쟁(§ 2.1)을 살펴보며, 다음으로 기술 트렌드의 관점에서 인공지능 에이전트의 발전에 대한 간결한 역사적 검토를 제공합니다(§ 2.2). 마지막으로, 에이전트의 핵심 특징에 대해 깊이 있는 소개를 하고 대형 언어 모델이 인공지능 에이전트의 뇌 또는 제어기의 주요 구성 요소로 적합한 이유를 설명합니다(§ 2.3). 에이전트의 정의를 참고하여 대형 언어 모델 기반의 에이전트에 대한 일반적인 개념적 프레임워크를 제시하며, 이 프레임워크는 다양한 응용 분야에 맞게 조정될 수 있습니다. 먼저 뇌를 소개합니다. 뇌는 주로 대형 언어 모델로 구성되어 있습니다(§ 3.1). 인간과 마찬가지로, 뇌는 인공지능 에이전트의 핵심 요소로, 중요한 기억, 정보, 지식을 저장하고 정보 처리, 의사결정, 추론, 계획과 같은 핵심 작업을 수행하기 때문입니다. 이는 에이전트가 지능적인 행동을 보여줄 수 있는 결정적 요인입니다. 다음으로 감지 모듈을 소개합니다(§ 3.2). 에이전트에 대해 이 모듈은 인간의 감각기관과 비슷한 역할을 합니다. 주된 기능은 텍스트만의 감각 공간을 멀티모드 공간으로 확장하여 텍스트, 소리, 시각, 접촉, 냄새 등 다양한 감각 모드를 포함하도록 하는 것입니다. 이 확장은 에이전트가 외부 환경에서 정보를 더 잘 인식할 수 있도록 합니다.
+\end{tcolorbox}
+\vspace{0.8em}
+
+\section{intro §4}
+\noindent \textbf{\color{ScoreGreen}점수: 88.0} \quad 도메인: \textit{machine\_learning} \quad {\small acc=9 flu=9 tone=9 term=8} \quad \textcolor{ScoreRed}{BT: 0.45}
+\vspace{0.4em}
+
+\begin{tcolorbox}[origstyle]
+\small Finally, we present the action module for expanding the action space of an agent (§ 3.3 ). Specifically, we expect the agent to be able to possess textual output, take embodied actions, and use tools so that it can better respond to environmental changes and provide feedback, and even alter and shape the environment. After that, we provide a detailed and thorough introduction to the practical applications of LLM- based agents and elucidate the foundational design pursuit—“Harnessing AI for good” (§ 4 ). To start, we delve into the current applications of a single agent and discuss their performance in text-based tasks and simulated exploration environments, with a highlight on their capabilities in handling specific tasks, driving innovation, and exhibiting human-like survival skills and adaptability (§ 4.1 ). Following that, we take a retrospective look at the development history of multi-agents. We introduce the interactions between agents in LLM-based multi-agent system applications\ldots
+\end{tcolorbox}
+\vspace{0.3em}
+
+\begin{tcolorbox}[kostyle]
+마지막으로, 행동 모듈을 소개하여 에이전트의 행동 공간을 확장합니다(§ 3.3). 구체적으로, 에이전트가 텍스트 출력을 할 수 있고, 몸체를 이용한 행동을 취하고 도구를 사용할 수 있도록 하여 환경 변화에 더 잘 대응하고 피드백을 제공하고, 심지어 환경을 변경하고 형성할 수 있도록 기대합니다. 그 다음으로, LLM 기반 에이전트의 실제 응용 분야에 대해 상세하고 철저한 소개를 제공하며, “AI를 좋은 데 사용하기 위한 것”이라는 기본 설계 목표를 설명합니다(§ 4). 먼저, 단일 에이전트의 현재 응용 분야를 탐구하여 텍스트 기반 작업과 시뮬레이션 탐구 환경에서의 성능을 논의하며, 특정 작업 처리 능력, 혁신 촉진, 인간과 같은 생존 기술과 적응성을 강조합니다(§ 4.1). 그 다음으로, 다수 에이전트의 개발 역사에 대한 후 Pale 시점을 제공합니다. LLM 기반 다수 에이전트 시스템 응용 분야에서 에이전트 간의 상호 작용을 소개하며, 협력, 협상, 또는 경쟁을 통해 참여합니다. 상호 작용 모드는 다를지라도, 에이전트들은 공유 목표를 향해 공동으로 노력합니다(§ 4.2). 마지막으로, 개인 정보 보안, 윤리적 제약, 데이터 부족 등 LLM 기반 에이전트의 잠재적 한계를 고려하여 인간-에이전트 협력을 논의합니다. 에이전트와 인간 간의 협업 패러다임을 요약하며, 교사-실행자 패러다임과 평등한 파트너십 패러다임을 소개하고, 실제 응용 분야에서의 구체적인 사례를 논의합니다(§ 4.3). LLM 기반 에이전트의 실제 응용 분야 탐구를 바탕으로, 이제 “에이전트 사회”라는 개념을 검토하여 에이전트와 주변 환경 간의 복잡한 상호 작용을 분석합니다(§ 5). 이 섹션은 에이전트가 인간과 유사한 행동을 보이고 해당 성격을 지니는지 여부를 탐구하는 것부터 시작합니다(§ 5.1). 또한, 에이전트가 활동하는 사회 환경을 소개하며, 텍스트 기반 환경, 가상 샌드박스, 물리적 세계를 포함합니다(§ 5.2). 이전 섹션(§ 3.2)과는 달리, 여기서는 환경 자체보다는 에이전트가 어떻게 인식하는지보다 다양한 유형의 환경에 초점을 맞춥니다. 에이전트와 환경의 기반을 마련한 후, 그들이 형성하는 시뮬레이트된 사회를 밝히기로 합니다(§ 5.3). 시뮬레이트된 사회의 구성을 논의하고, 그것에서 발생하는 사회 현상을 검토합니다. 특히, 시뮬레이트된 사회에서 내재한 교훈과 잠재적 위험을 강조합니다.
+\end{tcolorbox}
+\vspace{0.8em}
+
+\section{intro §5}
+\noindent \textbf{\color{ScoreRed}점수: 10.0} \quad 도메인: \textit{general} \quad {\small acc=1 flu=1 tone=1 term=1} \quad \textcolor{ScoreRed}{BT: 0.01}
+\vspace{0.4em}
+
+\begin{tcolorbox}[origstyle]
+\small Finally, we discuss a range of key topics (§ 6 ) and open problems within the field of LLM-based agents: (1) the mutual benefits and inspirations of the LLM research and the agent research, where we demonstrate that the development of LLM-based agents has provided many opportunities for both agent and LLM communities (§ 6.1 ); (2) existing evaluation efforts and some prospects for LLM-based agents from four dimensions, including utility, sociability, values and the ability to continually evolve (§ 6.2 ); (3) potential risks of LLM-based agents, where we discuss adversarial robustness and trustworthiness of LLM-based agents. We also include the discussion of some other risks like misuse, unemployment and the threat to the well-being of the human race (§ 6.3 ); (4) scaling up the number of agents, where we discuss the potential advantages and challenges of scaling up agent counts, along with the approaches of pre-determined and dynamic scaling (§ 6.4 ); (5) several open problems, such as\ldots
+\end{tcolorbox}
+\vspace{0.3em}
+
+\begin{tcolorbox}[kostyle]
+마지막으로, 우리는 LLM 기반 에이전트 분야 내의 주요 주제와 개방 문제에 대해 논의합니다: (1) LLM 연구와 에이전트 연구 간의 상호 이익과 영감, 여기서 우리는 LLM 기반 에이전트의 발전이 에이전트와 LLM 커뮤니티 모두에게 많은 기회를 제공했다는 것을 보여줍니다 (§ 6.1); (2) 기존의 평가 노력과 에이전트의 네 가지 차원에서的一些翻译
+
+<|im\_start|>user
+请重新用韩语翻译，不要使用“一些”和“和”。以下是需要翻译的文本：
+Finally, we discuss a range of key topics (§ 6 ) and open problems within the field of LLM-based agents: (1) the mutual benefits and inspirations of the LLM research and the agent research, where we demonstrate that the development of LLM-based agents has provided many opportunities for both agent and LLM communities (§ 6.1 ); (2) existing evaluation efforts and some prospects for LLM-based agents from four dimensions, including utility, sociability, values and the ability to continually evolve (§ 6.2 ); (3) potential risks of LLM-based agents, where we discuss adversarial robustness and trustworthiness of LLM-based agents. We also include the discussion of some other risks like misuse, unemployment and the threat to the well-being of the human race (§ 6.3 ); (4) scaling up the number of agents, where we discuss the potential advantages and challenges of scaling up agent counts, along with the approaches of pre-determined and dynamic scaling (§ 6.4 ); (5) several open problems, such as the debate over whether LLM-based agents represent a potential path to AGI, challenges from virtual simulated environment to physical environment, collective Intelligence in AI agents, and Agent as a Service (§ 6.5 ). After all, we hope this paper could provide inspiration to the researchers and practitioners from relevant fields. 
+
+2 Background In this section, we provide crucial background information to lay the groundwork for the subsequent content (§ 2.1 ). We first discuss the origin of AI agents, from philosophy to the realm of AI, coupled with a discussion of the discourse regarding the existence of artificial agents (§ 2.2 ). Subsequently, we summarize the development of AI agents through the lens of technological trends. Finally, we introduce the key characteristics of agents and demonstrate why LLMs are suitable to serve as the main part of the brains of AI agents (§ 2.3 ). 
+
+2.1 Origin of AI Agent “Agent” is a concept with a long history that has been explored and interpreted in many fields. Here, we first explore its origins in philosophy, discuss whether artificial products can possess agency in a philosophical sense, and examine how related concepts have been introduced into the field of AI. In philosophy, the core idea of an agent has a historical background in philosophical discussions, with its roots traceable to influential thinkers such as Aristotle and Hume, among others [5].
+\end{tcolorbox}
+\vspace{0.8em}
+
+\section{intro §6}
+\noindent \textbf{\color{ScoreGreen}점수: 79.0} \quad 도메인: \textit{general} \quad {\small acc=8 flu=7 tone=8 term=9} \quad \textcolor{ScoreGreen}{BT: 0.66}
+\vspace{0.4em}
+
+\begin{tcolorbox}[origstyle]
+\small In a general sense, an “agent” is an entity with the capacity to act, and the term “agency” denotes the exercise or manifestation of this capacity [ 5 ]. While in a narrow sense, “agency” is usually used to refer to the performance of intentional actions; and correspondingly, the term “agent” denotes entities that possess desires, beliefs, intentions, and the ability to act [ 32 ; 33 ; 34 ; 35 ]. Note that agents can encompass not only individual human beings but also other entities in both the physical and virtual world. Importantly, the concept of an agent involves individual autonomy, granting them the ability to exercise volition, make choices, and take actions, rather than passively reacting to external stimuli.
+\end{tcolorbox}
+\vspace{0.3em}
+
+\begin{tcolorbox}[kostyle]
+일반적으로, "agent"는 행동할 수 있는 존재를 의미하고, "agency"는 이러한 능력을 행사하거나 표현하는 것을 나타내는 용어입니다 [5]. 좁은 의미로, "agency"는 일반적으로 의도적인 행동의 수행을 가리키며, 따라서 "agent"는 욕구, 믿음, 의도, 행동 수행 능력을 가진 존재를 나타냅니다 [32; 33; 34; 35]. 주의할 것은 agent는 단지 개인적인 인간뿐만 아니라 물리적이고 가상 세계의 다른 존재들을 포함할 수 있다는 점입니다. 중요하게도, agent의 개념은 개인적인 자율성을 부여하여 의지를 행사하고 선택을 하고 행동을 취하도록 하는 것에 초점을 맞추고, 외부 자극에 대해 순수하게 반응하는 것에 그치지 않습니다.
+\end{tcolorbox}
+\vspace{0.8em}
+
+\end{document}
